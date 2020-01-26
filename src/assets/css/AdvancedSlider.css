@@ -1,0 +1,82 @@
+.compslider {
+    position: relative;
+    width: 100%;
+    height: 80px;
+}
+
+
+.comprail{
+    position: absolute;
+    width: 100%;
+    height: 10px;
+    margin-top: 35px;
+    border-radius: 6px;
+    background-color: rgba(191, 203, 221,0.5);
+}
+
+
+.handle {
+    position: absolute;
+    margin-left: -15px;
+    margin-top: 25px;
+    z-index: 2;
+    width: 30px;
+    height: 30px;
+    border: 0;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 50%;
+    background-color: rgb(18, 88, 192);
+    color: #333;
+}
+
+.handle-label {
+    font-family: Roboto;
+    font-size: 11px;
+    margin-top: 35px;
+    background-color: white;
+    border-radius: 6px;
+}
+
+
+.track {
+    position: absolute;
+    height: 10px;
+    z-index: 1;
+    margin-top: 35px;
+    background-color: rgba(18, 88, 192,0.5);
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.sliderDiv{
+    text-align: center;
+}
+
+
+ .sliderText {
+    visibility: hidden;
+    background-color: rgba(0,0,0,0.75);
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 10px;
+  
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 9;
+  }
+
+  .sliderlabel {
+    font-family: Roboto;
+    font-size: 17px;
+    color: rgb(18, 88, 192);
+    background-color: rgba(255,255,255,0.92);
+    border-radius: 6px;
+    padding: 6px;
+  
+}
+
+.sliderlabel:hover .sliderText {
+    visibility: visible;
+}
