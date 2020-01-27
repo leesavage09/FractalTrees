@@ -23,10 +23,11 @@ class Canvas extends React.Component {
         if (this.state.ctx == null) return;
         this.timeout && clearTimeout(this.timeout);
         this.timeout = setTimeout(() => {
-            this.state.ctx.clearRect(0, 0, 1000, 1000);
+            this.state.ctx.fillStyle = "#fff";
+            this.state.ctx.fillRect(0, 0, 2000, 2000);
             let angle = 0;
-            let startX = 350;
-            let startY = 700;
+            let startX = 1000;
+            let startY = 2000;
             this.draw(startX, startY, this.props.initLength, angle, this.props.initWidth);
         }, 50);
     }
@@ -34,15 +35,15 @@ class Canvas extends React.Component {
     render() {
         this.createTree();
         return (
-            <canvas ref="canvas" width='700' height='700' className="treeCanvas" />
+            <canvas ref="canvas" width='2000' height='2000' className="treeCanvas" />
         )
     }
 
-    
+
 
     draw(startX, startY, len, angle, branchWidth, ctx = this.state.ctx) {
         ctx.save();
-        var bend = this.randValue(8 + (branchWidth / 2), 5 + (branchWidth / 4));
+        var bend = this.randValue(this.props.nextBendMin, this.props.nextBendMax);
         var nextWidth = branchWidth * this.randValue(this.props.nextWidthMin, this.props.nextWidthMax);
 
         ctx.translate(startX, startY);
@@ -64,21 +65,21 @@ class Canvas extends React.Component {
         if (this.booleanPercent(95)) {
             numBranch = numBranch + 1;
             var angle = this.randValue(-20, 20);
-            var length = len * this.randValue(0.8, 0.9);
+            var length = len * this.randValue(this.props.nextLengthMin, this.props.nextLengthMax);
             this.draw(0, 0, length, angle, nextWidth);
         }
         var width = nextWidth * this.randValue(0.6, 0.9);
         if (this.booleanPercent(60)) {
             numBranch = numBranch + 1;
             var angle = this.randValue(25, 40);
-            var length = len * this.randValue(0.6, 0.8);
+            var length = len * this.randValue(this.props.nextLengthLMin, this.props.nextLengthLMax);
             this.draw(0, 0, length, -angle, width);
         }
         var width = nextWidth * this.randValue(0.6, 0.9);
         if (this.booleanPercent(60)) {
             numBranch = numBranch + 1;
             var angle = this.randValue(25, 40);
-            var length = len * this.randValue(0.6, 0.8);
+            var length = len * this.randValue(this.props.nextLengthRMin, this.props.nextLengthRMax);
             this.draw(0, 0, length, angle, width);
         }
         if (numBranch != 0) {
@@ -121,7 +122,7 @@ class Canvas extends React.Component {
     drawSproutNode(x, y, width, ctx = this.state.ctx) {
         ctx.beginPath();
         ctx.fillStyle = this.colTreeBark;
-        ctx.arc(x, y, width/2, 0, 2 * Math.PI);
+        ctx.arc(x, y, width / 2, 0, 2 * Math.PI);
         ctx.stroke();
         ctx.fill();
     }
@@ -180,8 +181,8 @@ class Canvas extends React.Component {
     * @return {boolean} returns true 'per%' of the time
     */
     booleanPercent(per) {
-        per = per>100 ? 100 : per;
-        per = per>0 ? per : 0;
+        per = per > 100 ? 100 : per;
+        per = per > 0 ? per : 0;
         let val = Math.floor(this.randValue(0, 101));
         return val <= per
     }
