@@ -5,7 +5,18 @@
     transform: translate(-50%);
     z-index: -1;
 }
-
+.sideBar{
+    width:20px;
+    position: absolute;
+    left:0;
+    height:500vh;
+    background-color: red;
+    background: repeating-linear-gradient(
+  45deg,
+  #fff,
+  #000 60px
+);
+}
 
 body {
     margin: 0;
@@ -23,8 +34,10 @@ h1 {
     top:50vh;
     transform: translate(-50%,-50%);
     position: fixed;
+    opacity: 0;
 }
 h2 {
+    opacity: 0;
     font-size: 25px;
     left: 70vw;
     top:60vh;
@@ -41,7 +54,7 @@ text-align: center;
 
 .welcome-text {
 
-    padding-top:200vh;
+    padding-top:450vh;
     margin-bottom: 30px;
     height:100vh;
     background-image: linear-gradient(rgba(255,255,255,0.8) 65%, rgba(255,255,255,0) 100%);

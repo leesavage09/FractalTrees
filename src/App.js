@@ -11,18 +11,6 @@ class App extends React.Component {
     window.addEventListener('scroll', this.handleScroll);
   }
 
-  /**
- * Check if an element is in viewport
- *
- * @param {number} [offset]
- * @returns {boolean}
- */
-  isInViewport(offset = 0) {
-    if (!this.yourElement) return false;
-    const top = this.yourElement.getBoundingClientRect().top;
-    return (top + offset) >= 0 && (top - offset) <= window.innerHeight;
-  }
-
   constructor(props) {
     super(props);
     this.isBrowser = typeof window !== `undefined`;
@@ -54,82 +42,55 @@ class App extends React.Component {
     this.handleScroll = this.handleScroll.bind(this);
   }
 
-  handelInitLengthChanged(value) {
-    this.setState({ initLength: parseInt(value) });
-  }
-  handelInitWidthChanged(value) {
-    this.setState({ initWidth: parseInt(value) });
-  }
-  handelNextWidthMinChanged(value) {
-    this.setState({ nextWidthMin: parseFloat(value) });
-  }
-  handelNextWidthMaxChanged(value) {
-    this.setState({ nextWidthMax: parseFloat(value) });
-  }
-  handelNextLengthMinChanged(value) {
-    this.setState({ nextLengthMin: parseFloat(value) });
-  }
-  handelNextLengthMaxChanged(value) {
-    this.setState({ nextLengthMax: parseFloat(value) });
-  }
-
-  handelNextLengthLMinChanged(value) {
-    this.setState({ nextLengthLMin: parseFloat(value) });
-  }
-  handelNextLengthLMaxChanged(value) {
-    this.setState({ nextLengthLMax: parseFloat(value) });
-  }
-
-  handelNextLengthRMinChanged(value) {
-    this.setState({ nextLengthRMin: parseFloat(value) });
-  }
-  handelNextLengthRMaxChanged(value) {
-    this.setState({ nextLengthRMax: parseFloat(value) });
-  }
-
-
-  handelNextBendMinChanged(value) {
-    this.setState({ nextBendMin: parseFloat(value) });
-  }
-  handelNextBendMaxChanged(value) {
-    this.setState({ nextBendMax: parseFloat(value) });
-  }
+  handelInitLengthChanged(value) { this.setState({ initLength: parseInt(value) }); }
+  handelInitWidthChanged(value) { this.setState({ initWidth: parseInt(value) }); }
+  handelNextWidthMinChanged(value) { this.setState({ nextWidthMin: parseFloat(value) }); }
+  handelNextWidthMaxChanged(value) { this.setState({ nextWidthMax: parseFloat(value) }); }
+  handelNextLengthMinChanged(value) { this.setState({ nextLengthMin: parseFloat(value) }); }
+  handelNextLengthMaxChanged(value) { this.setState({ nextLengthMax: parseFloat(value) }); }
+  handelNextLengthLMinChanged(value) { this.setState({ nextLengthLMin: parseFloat(value) }); }
+  handelNextLengthLMaxChanged(value) { this.setState({ nextLengthLMax: parseFloat(value) }); }
+  handelNextLengthRMinChanged(value) { this.setState({ nextLengthRMin: parseFloat(value) }); }
+  handelNextLengthRMaxChanged(value) { this.setState({ nextLengthRMax: parseFloat(value) }); }
+  handelNextBendMinChanged(value) { this.setState({ nextBendMin: parseFloat(value) }); }
+  handelNextBendMaxChanged(value) { this.setState({ nextBendMax: parseFloat(value) }); }
 
 
   handleScroll(e) {
     if (!this.isBrowser) return { x: 0, y: 0 }
 
-
-
     let startAtPos = window.innerHeight * 0.5;
-    let stopAtPos = window.innerHeight * 1;
+    let stopAtPos = window.innerHeight * 1.5;
     this.animateInH1(this.createScrollKeyframe(startAtPos, stopAtPos));
 
-
-    startAtPos = window.innerHeight * 1.1;
-    stopAtPos = (window.innerHeight * 1.6);
+    startAtPos = window.innerHeight * 2.5;
+    stopAtPos = (window.innerHeight * 4.0);
     this.animateOutH1(this.createScrollKeyframe(startAtPos, stopAtPos));
 
+    startAtPos = window.innerHeight * 1.5;
+    stopAtPos = window.innerHeight * 2.5;
+    let tempkeyframe = this.createScrollKeyframe(startAtPos, stopAtPos);
+    this.animateInH2(tempkeyframe);
 
-
-
-    startAtPos = window.innerHeight * 0.75;
-    stopAtPos = window.innerHeight * 1;
-    this.animateInH2(this.createScrollKeyframe(startAtPos, stopAtPos));
-
-
-    startAtPos = window.innerHeight * 1.1;
-    stopAtPos = (window.innerHeight * 1.3);
+    startAtPos = window.innerHeight * 2.5;
+    stopAtPos = (window.innerHeight * 3.0);
     this.animateOutH2(this.createScrollKeyframe(startAtPos, stopAtPos));
 
-
-
+    startAtPos = window.innerHeight * 0.5;
+    stopAtPos = (window.innerHeight * 4.0);
+    this.animateTopH1H2(this.createScrollKeyframe(startAtPos, stopAtPos));
   }
 
   createScrollKeyframe(startAtPos, stopAtPos) {
     let pos = window.scrollY;
     let keyframe = ((pos - startAtPos) / (stopAtPos - startAtPos));
     return keyframe <= 0 ? 0 : (keyframe >= 1 ? 1 : keyframe);
+  }
+
+  animateTopH1H2(keyframe) {
+    if (keyframe != 1 && keyframe != 0) {
+      this.setState({ h1Top: ((1 - keyframe) * 15) + 35 + 'vh', h2Top: ((keyframe) * 5) + 65 + 'vw' });
+    }
   }
 
   animateInH1(keyframe) {
@@ -199,16 +160,18 @@ class App extends React.Component {
 
   render() {
     const aniH1 = {
-      opacity: this.state.h1Fade
+      opacity: this.state.h1Fade,
+      top: this.state.h1Top,
     };
     const aniH2 = {
-      opacity: this.state.h2Fade
+      opacity: this.state.h2Fade,
+      left: this.state.h2Top,
     };
     return (
       <div className="App">
         <header className="App-header">
 
-
+          <div className='sideBar'></div>
 
 
 
@@ -219,6 +182,9 @@ class App extends React.Component {
               <h2 style={aniH2}>By Lee Savage</h2>
               <p className='scroll'>Scroll for controls<br></br><FontAwesomeIcon icon={faCaretDown} /></p>
             </div>
+
+
+            {/* //encapsulate everything after this */}
 
             <Canvas className='treeCanvas'
               initLength={this.state.initLength}
