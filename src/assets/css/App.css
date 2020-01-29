@@ -1,3 +1,7 @@
+body {
+    margin: 0;
+}
+
 .treeCanvas {
     position: fixed;
     bottom: 0;
@@ -5,59 +9,55 @@
     transform: translate(-50%);
     z-index: -1;
 }
-.sideBar{
-    width:20px;
+.sideBar1{
+    width:15px;
     position: absolute;
     left:0;
-    height:500vh;
-    background-color: red;
-    background: repeating-linear-gradient(
-  45deg,
-  #fff,
-  #000 60px
-);
+    height:2000vh;
+    background: repeating-linear-gradient(#ddd 0px, #fff 20px, #666 20px, #111 40px);
+    z-index: 9;
+}
+.sideBar2{
+    width:15px;
+    position: absolute;
+    right:0;
+    height:2000vh;
+    background: repeating-linear-gradient(#ddd 0px, #fff 20px, #666 20px, #111 40px);
+    z-index: 9;
 }
 
-body {
-    margin: 0;
-}
-.container {
-    width: 98vw;
-    padding:1vw;
-    padding-bottom: 0;
-}
 
 h1 {
+    opacity: 0;
     font-family: 'Lobster', cursive;
     font-size: 60px;
     left: 50vw;
-    top:50vh;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%);
     position: fixed;
-    opacity: 0;
 }
 h2 {
     opacity: 0;
-    font-size: 25px;
-    left: 70vw;
-    top:60vh;
-    transform: translate(-50%,-50%);
-    position: fixed;
     font-family: 'Lobster', cursive;
+    font-size: 25px;
+    top:60vh;
+    transform: translate(0%,-50%);
+    position: fixed;
 }
 
 h3 {
-text-align: center;
+    text-align: center;
     font-family: 'Lobster', cursive;
-
+    -webkit-box-shadow: 0px 0px 20px 20px  #fff;
+    -moz-box-shadow: 0px 0px 20px 20px  #fff;
+    box-shadow: 0px 0px 20px 20px  #fff;
+    background-color: #fff;
 }
 
 .welcome-text {
-
     padding-top:450vh;
     margin-bottom: 30px;
     height:100vh;
-    background-image: linear-gradient(rgba(255,255,255,0.8) 65%, rgba(255,255,255,0) 100%);
+    background-image: linear-gradient(rgba(255,255,255,1.0) 50%, rgba(255,255,255,0.8) 65%, rgba(255,255,255,0) 100%);
 }
 .goodbye-text {
     height:100vh;

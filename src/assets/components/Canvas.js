@@ -7,16 +7,12 @@ class Canvas extends React.PureComponent {
     colFruit = "rgb(224,93,0)";
     colFruitShadow = "rgba(0,0,0,0.75)";
 
-
-
     constructor(props) {
         super(props);
         this.ctx = { ctx: null };
-        this.createTree = this.createTree.bind(this);
     }
 
     componentDidMount() {
-        //this.setState({ ctx: this.refs.canvas.getContext("2d") });
         this.ctx = this.refs.canvas.getContext("2d");
     }
 
@@ -27,8 +23,8 @@ class Canvas extends React.PureComponent {
             this.ctx.fillStyle = "#fff";
             this.ctx.fillRect(0, 0, 2000, 2000);
             let angle = 0;
-            let startX = 1000;
-            let startY = 2000;
+            let startX = 500    ;
+            let startY = 1000;
             this.draw(startX, startY, this.props.initLength, angle, this.props.initWidth);
         }, 50);
     }
@@ -36,7 +32,7 @@ class Canvas extends React.PureComponent {
     render() {
         this.createTree();
         return (
-            <canvas ref="canvas" width='2000' height='2000' className="treeCanvas" />
+            <canvas ref="canvas" width='1000' height='1000' className="treeCanvas" />
         )
     }
 
@@ -65,21 +61,21 @@ class Canvas extends React.PureComponent {
         var numBranch = 0;
         if (this.booleanPercent(95)) {
             numBranch = numBranch + 1;
-             angle = this.randValue(-20, 20);
+             angle = this.randValue(this.props.nextAngleMin,this.props.nextAngleMax);
              var length = len * this.randValue(this.props.nextLengthMin, this.props.nextLengthMax);
             this.draw(0, 0, length, angle, nextWidth);
         }
         var width = nextWidth * this.randValue(0.6, 0.9);
         if (this.booleanPercent(60)) {
             numBranch = numBranch + 1;
-             angle = this.randValue(25, 40);
+             angle = this.randValue(this.props.nextSideAngleMin, this.props.nextSideAngleMax);
              length = len * this.randValue(this.props.nextLengthMin, this.props.nextLengthMax);
             this.draw(0, 0, length, -angle, width);
         }
         width = nextWidth * this.randValue(0.6, 0.9);
         if (this.booleanPercent(60)) {
             numBranch = numBranch + 1;
-             angle = this.randValue(25, 40);
+             angle = this.randValue(this.props.nextSideAngleMin, this.props.nextSideAngleMax);
              length = len * this.randValue(this.props.nextLengthMin, this.props.nextLengthMax);
             this.draw(0, 0, length, angle, width);
         }
