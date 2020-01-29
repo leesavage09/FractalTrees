@@ -18,42 +18,21 @@ class App extends React.Component {
     this.state = {
       initLength: 91, initWidth: 22,
       nextLengthMin: 0.6, nextLengthMax: 0.85,
-      nextLengthLMin: 0.5, nextLengthLMax: 0.7,
-      nextLengthRMin: 0.5, nextLengthRMax: 0.7,
       nextWidthMin: 0.56, nextWidthMax: 0.8,
       nextBendMin: 5, nextBendMax: 8,
     };
-    this.handelInitLengthChanged = this.handelInitLengthChanged.bind(this);
-    this.handelInitWidthChanged = this.handelInitWidthChanged.bind(this);
-    this.handelNextWidthMinChanged = this.handelNextWidthMinChanged.bind(this);
-    this.handelNextWidthMaxChanged = this.handelNextWidthMaxChanged.bind(this);
-    this.handelNextLengthMinChanged = this.handelNextLengthMinChanged.bind(this);
-    this.handelNextLengthMaxChanged = this.handelNextLengthMaxChanged.bind(this);
-
-    this.handelNextLengthLMinChanged = this.handelNextLengthLMinChanged.bind(this);
-    this.handelNextLengthLMaxChanged = this.handelNextLengthLMaxChanged.bind(this);
-
-    this.handelNextLengthRMinChanged = this.handelNextLengthRMinChanged.bind(this);
-    this.handelNextLengthRMaxChanged = this.handelNextLengthRMaxChanged.bind(this);
-
-    this.handelNextBendMinChanged = this.handelNextBendMinChanged.bind(this);
-    this.handelNextBendMaxChanged = this.handelNextBendMaxChanged.bind(this);
 
     this.handleScroll = this.handleScroll.bind(this);
   }
 
-  handelInitLengthChanged(value) { this.setState({ initLength: parseInt(value) }); }
-  handelInitWidthChanged(value) { this.setState({ initWidth: parseInt(value) }); }
-  handelNextWidthMinChanged(value) { this.setState({ nextWidthMin: parseFloat(value) }); }
-  handelNextWidthMaxChanged(value) { this.setState({ nextWidthMax: parseFloat(value) }); }
-  handelNextLengthMinChanged(value) { this.setState({ nextLengthMin: parseFloat(value) }); }
-  handelNextLengthMaxChanged(value) { this.setState({ nextLengthMax: parseFloat(value) }); }
-  handelNextLengthLMinChanged(value) { this.setState({ nextLengthLMin: parseFloat(value) }); }
-  handelNextLengthLMaxChanged(value) { this.setState({ nextLengthLMax: parseFloat(value) }); }
-  handelNextLengthRMinChanged(value) { this.setState({ nextLengthRMin: parseFloat(value) }); }
-  handelNextLengthRMaxChanged(value) { this.setState({ nextLengthRMax: parseFloat(value) }); }
-  handelNextBendMinChanged(value) { this.setState({ nextBendMin: parseFloat(value) }); }
-  handelNextBendMaxChanged(value) { this.setState({ nextBendMax: parseFloat(value) }); }
+  initLengthChange = (v) => { this.setState({ initLength: parseInt(v) }) };
+  initWidthChanged = (v) => { this.setState({ initWidth: parseInt(v) }); };
+  nextLengthMinChanged = (v) => this.setState({ nextLengthMin: parseFloat(v) });
+  nextLengthMaxChanged = (v) => this.setState({ nextLengthMax: parseFloat(v) });
+  nextWidthMinChanged = (v) => this.setState({ nextWidthMin: parseFloat(v) });
+  nextWidthMaxChanged = (v) => this.setState({ nextWidthMax: parseFloat(v) });
+  nextBendMinChanged = (v) => this.setState({ nextBendMin: parseFloat(v) });
+  nextBendMaxChanged = (v) => this.setState({ nextBendMax: parseFloat(v) });
 
 
   handleScroll(e) {
@@ -130,8 +109,6 @@ class App extends React.Component {
   }
 
 
-  // decelerating to zero velocity 
-  easeOutCubic = t => (--t) * t * t + 1;
   // accelerating from zero velocity 
   easeInCubic = t => t * t * t;
   // decelerating to zero velocity 
@@ -193,15 +170,6 @@ class App extends React.Component {
               nextWidthMax={this.state.nextWidthMax}
               nextLengthMin={this.state.nextLengthMin}
               nextLengthMax={this.state.nextLengthMax}
-
-              nextLengthLMin={this.state.nextLengthLMin}
-              nextLengthLMax={this.state.nextLengthLMax}
-
-
-              nextLengthRMin={this.state.nextLengthRMin}
-              nextLengthRMax={this.state.nextLengthRMax}
-
-
               nextBendMin={this.state.nextBendMin}
               nextBendMax={this.state.nextBendMax}
             />
@@ -216,7 +184,8 @@ class App extends React.Component {
                 minValue={1}
                 maxValue={100}
                 value={this.state.initLength}
-                valueChanged={this.handelInitLengthChanged} />
+                valueChanged={this.initLengthChange}
+              />
 
               <AdvancedSlider
                 label="Width"
@@ -226,7 +195,7 @@ class App extends React.Component {
                 minValue={1}
                 maxValue={100}
                 value={this.state.initWidth}
-                valueChanged={this.handelInitWidthChanged} />
+                valueChanged={this.initWidthChanged} />
 
               <div className='spacer'></div>
               <h3>The next is created from the last</h3>
@@ -240,34 +209,8 @@ class App extends React.Component {
                 maxValue={0.95}
                 value={this.state.nextLengthMin}
                 value2={this.state.nextLengthMax}
-                valueChanged={this.handelNextLengthMinChanged}
-                value2Changed={this.handelNextLengthMaxChanged} />
-
-              <AdvancedSlider
-                label="Next Length Left"
-                text='The length multiplier of the next branch to the left. A value of 0.5 will mean the next branch is half the length of the last '
-                numberHandles={2}
-                step={0.01}
-                precision={2}
-                minValue={0.25}
-                maxValue={0.95}
-                value={this.state.nextLengthLMin}
-                value2={this.state.nextLengthLMax}
-                valueChanged={this.handelNextLengthLMinChanged}
-                value2Changed={this.handelNextLengthLMaxChanged} />
-
-              <AdvancedSlider
-                label="Next Length Right"
-                text='The length multiplier of the next branch to the right. A value of 0.5 will mean the next branch is half the length of the last '
-                numberHandles={2}
-                step={0.01}
-                precision={2}
-                minValue={0.25}
-                maxValue={0.95}
-                value={this.state.nextLengthRMin}
-                value2={this.state.nextLengthRMax}
-                valueChanged={this.handelNextLengthRMinChanged}
-                value2Changed={this.handelNextLengthRMaxChanged} />
+                valueChanged={this.nextLengthMinChanged}
+                value2Changed={this.nextLengthMaxChanged} />
 
 
               <AdvancedSlider
@@ -280,9 +223,8 @@ class App extends React.Component {
                 maxValue={1.50}
                 value={this.state.nextWidthMin}
                 value2={this.state.nextWidthMax}
-                valueChanged={this.handelNextWidthMinChanged}
-                value2Changed={this.handelNextWidthMaxChanged} />
-
+                valueChanged={this.nextWidthMaxChanged}
+                value2Changed={this.nextWidthMinChanged} />
 
               <div className='spacer'></div>
               <h3>If they were all rectangles it would be boaring</h3>
@@ -296,8 +238,8 @@ class App extends React.Component {
                 maxValue={50}
                 value={this.state.nextBendMin}
                 value2={this.state.nextBendMax}
-                valueChanged={this.handelNextBendMinChanged}
-                value2Changed={this.handelNextBendMaxChanged} />
+                valueChanged={this.nextBendMinChanged}
+                value2Changed={this.nextBendMaxChanged} />
 
               <div className='spacer'></div>
 

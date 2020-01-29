@@ -4,7 +4,7 @@ import '../css/AdvancedSlider.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
-class AdvancedSlider extends React.Component {
+class AdvancedSlider extends React.PureComponent {
 
     constructor(props) {
         super(props);

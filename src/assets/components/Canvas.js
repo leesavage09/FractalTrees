@@ -1,6 +1,6 @@
 import React from 'react';
 
-class Canvas extends React.Component {
+class Canvas extends React.PureComponent {
 
     colTreeBark = "rgb(35,18,5)";
     colTreeShadow = "rgba(35,18,5,0.75)";
@@ -72,14 +72,14 @@ class Canvas extends React.Component {
         if (this.booleanPercent(60)) {
             numBranch = numBranch + 1;
             var angle = this.randValue(25, 40);
-            var length = len * this.randValue(this.props.nextLengthLMin, this.props.nextLengthLMax);
+            var length = len * this.randValue(this.props.nextLengthMin, this.props.nextLengthMax);
             this.draw(0, 0, length, -angle, width);
         }
         var width = nextWidth * this.randValue(0.6, 0.9);
         if (this.booleanPercent(60)) {
             numBranch = numBranch + 1;
             var angle = this.randValue(25, 40);
-            var length = len * this.randValue(this.props.nextLengthRMin, this.props.nextLengthRMax);
+            var length = len * this.randValue(this.props.nextLengthMin, this.props.nextLengthMax);
             this.draw(0, 0, length, angle, width);
         }
         if (numBranch != 0) {
