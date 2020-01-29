@@ -7,24 +7,28 @@ import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 class App extends React.Component {
 
+  /**
+   * Get scroll events
+   */
   componentDidMount() {
-    window.addEventListener('scroll', this.handleScroll);
+    window.addEventListener('scroll', this.animateUI.bind(this));
   }
 
   constructor(props) {
     super(props);
-    this.isBrowser = typeof window !== `undefined`;
-
     this.state = {
       initLength: 91, initWidth: 22,
       nextLengthMin: 0.6, nextLengthMax: 0.85,
       nextWidthMin: 0.56, nextWidthMax: 0.8,
       nextBendMin: 5, nextBendMax: 8,
     };
-
-    this.handleScroll = this.handleScroll.bind(this);
+    
+    this.handleScroll = this.animateUI.bind(this);
   }
 
+  /**
+   * Handel state updates
+   */
   initLengthChange = (v) => { this.setState({ initLength: parseInt(v) }) };
   initWidthChanged = (v) => { this.setState({ initWidth: parseInt(v) }); };
   nextLengthMinChanged = (v) => this.setState({ nextLengthMin: parseFloat(v) });
@@ -34,9 +38,11 @@ class App extends React.Component {
   nextBendMinChanged = (v) => this.setState({ nextBendMin: parseFloat(v) });
   nextBendMaxChanged = (v) => this.setState({ nextBendMax: parseFloat(v) });
 
-
-  handleScroll(e) {
-    if (!this.isBrowser) return { x: 0, y: 0 }
+  /**
+   * Create animations based on scroll positions realtive to VH units
+   * @param {a scroll event} e 
+   */
+  animateUI(e) {
 
     let startAtPos = window.innerHeight * 0.5;
     let stopAtPos = window.innerHeight * 1.5;
@@ -67,43 +73,43 @@ class App extends React.Component {
   }
 
   animateTopH1H2(keyframe) {
-    if (keyframe != 1 && keyframe != 0) {
+    if (keyframe !== 1 && keyframe !== 0) {
       this.setState({ h1Top: ((1 - keyframe) * 15) + 35 + 'vh', h2Top: ((keyframe) * 5) + 65 + 'vw' });
     }
   }
 
   animateInH1(keyframe) {
-    if (keyframe != 1 && keyframe != 0) {
+    if (keyframe !== 1 && keyframe !== 0) {
       this.setState({ h1Fade: this.easeInCubic(keyframe) });
     }
-    else if (keyframe === 0 && this.state.h1Fade != 0) {
+    else if (keyframe === 0 && this.state.h1Fade !== 0) {
       this.setState({ h1Fade: 0 });
     }
   }
 
   animateOutH1(keyframe) {
-    if (keyframe != 1 && keyframe != 0) {
+    if (keyframe !== 1 && keyframe !== 0) {
       this.setState({ h1Fade: this.easeOutCubic(1 - keyframe) });
     }
-    if (keyframe === 1 && this.state.h1Fade != 0) {
+    if (keyframe === 1 && this.state.h1Fade !== 0) {
       this.setState({ h1Fade: 0 });
     }
   }
 
   animateInH2(keyframe) {
-    if (keyframe != 1 && keyframe != 0) {
+    if (keyframe !== 1 && keyframe !== 0) {
       this.setState({ h2Fade: this.easeInCubic(keyframe) });
     }
-    else if (keyframe === 0 && this.state.h2Fade != 0) {
+    else if (keyframe === 0 && this.state.h2Fade !== 0) {
       this.setState({ h2Fade: 0 });
     }
   }
 
   animateOutH2(keyframe) {
-    if (keyframe != 1 && keyframe != 0) {
+    if (keyframe !== 1 && keyframe !== 0) {
       this.setState({ h2Fade: this.easeOutCubic(1 - keyframe) });
     }
-    if (keyframe === 1 && this.state.h2Fade != 0) {
+    if (keyframe === 1 && this.state.h2Fade !== 0) {
       this.setState({ h2Fade: 0 });
     }
   }

@@ -16,7 +16,7 @@ class AdvancedSlider extends React.PureComponent {
         v = v > this.props.maxValue ? v = this.props.maxValue : v;
         v = v < this.props.minValue ? v = this.props.minValue : v;
         this.props.valueChanged(v);
-        if (this.props.numberHandles == 2) {
+        if (this.props.numberHandles === 2) {
             let v = event[1];
             v = v > this.props.maxValue ? v = this.props.maxValue : v;
             v = v < this.props.minValue ? v = this.props.minValue : v;
@@ -33,7 +33,7 @@ class AdvancedSlider extends React.PureComponent {
                     className='compslider'
                     domain={[this.props.minValue, this.props.maxValue]}
                     step={this.props.step}
-                    values={this.props.numberHandles == 2 ? [this.props.value, this.props.value2] : [this.props.value]}
+                    values={this.props.numberHandles === 2 ? [this.props.value, this.props.value2] : [this.props.value]}
                     onUpdate={this.handleChange}
                 >
 
@@ -56,7 +56,7 @@ class AdvancedSlider extends React.PureComponent {
                             </div>
                         )}
                     </CompHandles>
-                    <Tracks left={this.props.numberHandles != 2} right={false}>
+                    <Tracks left={this.props.numberHandles !== 2} right={false}>
                         {({ tracks, getTrackProps }) => (
                             <div className="slider-tracks">
                                 {tracks.map(({ id, source, target }) => (

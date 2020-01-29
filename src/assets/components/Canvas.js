@@ -11,20 +11,21 @@ class Canvas extends React.PureComponent {
 
     constructor(props) {
         super(props);
-        this.state = { ctx: null };
+        this.ctx = { ctx: null };
         this.createTree = this.createTree.bind(this);
     }
 
     componentDidMount() {
-        this.setState({ ctx: this.refs.canvas.getContext("2d") });
+        //this.setState({ ctx: this.refs.canvas.getContext("2d") });
+        this.ctx = this.refs.canvas.getContext("2d");
     }
 
     createTree() {
-        if (this.state.ctx == null) return;
+        if (this.ctx === null) return;
         this.timeout && clearTimeout(this.timeout);
         this.timeout = setTimeout(() => {
-            this.state.ctx.fillStyle = "#fff";
-            this.state.ctx.fillRect(0, 0, 2000, 2000);
+            this.ctx.fillStyle = "#fff";
+            this.ctx.fillRect(0, 0, 2000, 2000);
             let angle = 0;
             let startX = 1000;
             let startY = 2000;
@@ -41,7 +42,7 @@ class Canvas extends React.PureComponent {
 
 
 
-    draw(startX, startY, len, angle, branchWidth, ctx = this.state.ctx) {
+    draw(startX, startY, len, angle, branchWidth, ctx = this.ctx) {
         ctx.save();
         var bend = this.randValue(this.props.nextBendMin, this.props.nextBendMax);
         var nextWidth = branchWidth * this.randValue(this.props.nextWidthMin, this.props.nextWidthMax);
@@ -64,32 +65,32 @@ class Canvas extends React.PureComponent {
         var numBranch = 0;
         if (this.booleanPercent(95)) {
             numBranch = numBranch + 1;
-            var angle = this.randValue(-20, 20);
-            var length = len * this.randValue(this.props.nextLengthMin, this.props.nextLengthMax);
+             angle = this.randValue(-20, 20);
+             var length = len * this.randValue(this.props.nextLengthMin, this.props.nextLengthMax);
             this.draw(0, 0, length, angle, nextWidth);
         }
         var width = nextWidth * this.randValue(0.6, 0.9);
         if (this.booleanPercent(60)) {
             numBranch = numBranch + 1;
-            var angle = this.randValue(25, 40);
-            var length = len * this.randValue(this.props.nextLengthMin, this.props.nextLengthMax);
+             angle = this.randValue(25, 40);
+             length = len * this.randValue(this.props.nextLengthMin, this.props.nextLengthMax);
             this.draw(0, 0, length, -angle, width);
         }
-        var width = nextWidth * this.randValue(0.6, 0.9);
+        width = nextWidth * this.randValue(0.6, 0.9);
         if (this.booleanPercent(60)) {
             numBranch = numBranch + 1;
-            var angle = this.randValue(25, 40);
-            var length = len * this.randValue(this.props.nextLengthMin, this.props.nextLengthMax);
+             angle = this.randValue(25, 40);
+             length = len * this.randValue(this.props.nextLengthMin, this.props.nextLengthMax);
             this.draw(0, 0, length, angle, width);
         }
-        if (numBranch != 0) {
+        if (numBranch !== 0) {
             this.drawSproutNode(0, 0, nextWidth);
         }
 
         ctx.restore();
     }
 
-    drawFruit(ctx = this.state.ctx) {
+    drawFruit(ctx = this.ctx) {
         if (!this.booleanOneIn(5000)) return;
         ctx.beginPath();
         ctx.shadowColor = this.colFruitShadow;
@@ -99,7 +100,7 @@ class Canvas extends React.PureComponent {
         ctx.fill();
     }
 
-    drawLeaf(ctx = this.state.ctx) {
+    drawLeaf(ctx = this.ctx) {
         if (!this.booleanOneIn(100)) return;
         ctx.beginPath();
         var r = Math.floor((Math.random() * 10) + 0);
@@ -119,7 +120,7 @@ class Canvas extends React.PureComponent {
         ctx.fill();
     }
 
-    drawSproutNode(x, y, width, ctx = this.state.ctx) {
+    drawSproutNode(x, y, width, ctx = this.ctx) {
         ctx.beginPath();
         ctx.fillStyle = this.colTreeBark;
         ctx.arc(x, y, width / 2, 0, 2 * Math.PI);
@@ -127,7 +128,7 @@ class Canvas extends React.PureComponent {
         ctx.fill();
     }
 
-    drawBranch(len, branchWidth, nextWidth, bend, ctx = this.state.ctx) {
+    drawBranch(len, branchWidth, nextWidth, bend, ctx = this.ctx) {
         ctx.beginPath();
         ctx.strokeStyle = this.colTreeBark;
         ctx.fillStyle = this.colTreeBark;
@@ -173,7 +174,7 @@ class Canvas extends React.PureComponent {
     * @return {boolean} returns true one in 'num' times
     */
     booleanOneIn(num) {
-        return Math.floor(this.randValue(0, num)) == 0
+        return Math.floor(this.randValue(0, num)) === 0
     }
 
     /**
