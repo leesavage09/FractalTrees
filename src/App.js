@@ -26,6 +26,7 @@ class App extends React.Component {
       deathMin: 0, deathMax: 0,
       deathSideMin: 100, deathSideMax: 100,
       fruit: 0, leaf: 0,
+      wireframe:false,
     };
 
     this.handleScroll = this.animateUI.bind(this);
@@ -148,6 +149,8 @@ class App extends React.Component {
   deathSideMaxChanged = (v) => this.setState({ deathSideMax: parseFloat(v) });
   fruitChanged = (v) => this.setState({ fruit: parseFloat(v) });
   leafChanged = (v) => this.setState({ leaf: parseFloat(v) });
+  wireframeToggle = (v) => this.setState({wireframe:!this.state.wireframe});
+
 
 
   /**
@@ -464,6 +467,7 @@ render() {
             maxValue={100}
             value={this.state.leaf}
             valueChanged={this.leafChanged} />
+            <input type="button" value='Wireframe Mode' onClick={this.wireframeToggle} />
         </div>
 
 
@@ -517,6 +521,7 @@ render() {
           deathSideMax={this.state.deathSideMax}
           fruit={this.state.fruit}
           leaf={this.state.leaf}
+          wireframe={this.state.wireframe}
         />
 
       </header>

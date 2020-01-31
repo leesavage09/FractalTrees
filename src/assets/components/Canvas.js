@@ -23,7 +23,7 @@ class Canvas extends React.PureComponent {
             this.ctx.fillStyle = "#fff";
             this.ctx.fillRect(0, 0, 2000, 2000);
             let angle = 0;
-            let startX = 500    ;
+            let startX = 500;
             let startY = 1000;
             this.draw(startX, startY, this.props.initLength, angle, this.props.initWidth);
         }, 50);
@@ -61,22 +61,22 @@ class Canvas extends React.PureComponent {
         var numBranch = 0;
         if (this.booleanPercent(this.props.deathMax)) {
             numBranch = numBranch + 1;
-             angle = this.randValue(this.props.nextAngleMin,this.props.nextAngleMax);
-             var length = len * this.randValue(this.props.nextLengthMin, this.props.nextLengthMax);
+            angle = this.randValue(this.props.nextAngleMin, this.props.nextAngleMax);
+            var length = len * this.randValue(this.props.nextLengthMin, this.props.nextLengthMax);
             this.draw(0, 0, length, angle, nextWidth);
         }
         var width = nextWidth * this.randValue(this.props.nextWidthMin, this.props.nextWidthMax);
         if (this.booleanPercent(this.props.deathSideMax)) {
             numBranch = numBranch + 1;
-             angle = this.randValue(this.props.nextSideAngleMin, this.props.nextSideAngleMax);
-             length = len * this.randValue(this.props.nextLengthMin, this.props.nextLengthMax);
+            angle = this.randValue(this.props.nextSideAngleMin, this.props.nextSideAngleMax);
+            length = len * this.randValue(this.props.nextLengthMin, this.props.nextLengthMax);
             this.draw(0, 0, length, -angle, width);
         }
         width = nextWidth * this.randValue(this.props.nextWidthMin, this.props.nextWidthMax);
         if (this.booleanPercent(this.props.deathSideMax)) {
             numBranch = numBranch + 1;
-             angle = this.randValue(this.props.nextSideAngleMin, this.props.nextSideAngleMax);
-             length = len * this.randValue(this.props.nextLengthMin, this.props.nextLengthMax);
+            angle = this.randValue(this.props.nextSideAngleMin, this.props.nextSideAngleMax);
+            length = len * this.randValue(this.props.nextLengthMin, this.props.nextLengthMax);
             this.draw(0, 0, length, angle, width);
         }
 
@@ -94,7 +94,7 @@ class Canvas extends React.PureComponent {
         ctx.fillStyle = this.colFruit;
         ctx.arc(0, 2.5, 3, 0, 2 * Math.PI);
         ctx.stroke();
-   //     ctx.fill();
+        if (!this.props.wireframe) ctx.fill();
     }
 
     drawLeaf(ctx = this.ctx) {
@@ -108,13 +108,13 @@ class Canvas extends React.PureComponent {
         ctx.arc(-8, 0, 8, 0, 0.5 * Math.PI);
         ctx.closePath();
         ctx.stroke();
-       // ctx.fill();
+        if (!this.props.wireframe) ctx.fill();
 
         ctx.beginPath();
         ctx.arc(0, 8, 8, 1 * Math.PI, 1.5 * Math.PI);
         ctx.closePath();
         ctx.stroke();
-     //   ctx.fill();
+        if (!this.props.wireframe) ctx.fill();
     }
 
     drawSproutNode(x, y, width, ctx = this.ctx) {
@@ -122,7 +122,7 @@ class Canvas extends React.PureComponent {
         ctx.fillStyle = this.colTreeBark;
         ctx.arc(x, y, width / 2, 0, 2 * Math.PI);
         ctx.stroke();
-       // ctx.fill();
+        if (!this.props.wireframe) ctx.fill();
     }
 
     drawBranch(len, branchWidth, nextWidth, bend, ctx = this.ctx) {
@@ -160,16 +160,16 @@ class Canvas extends React.PureComponent {
             } else {
                 ctx.bezierCurveTo(bottomLeftX, bottomLeftY, (topLeftX) + (-topRightY / bend), topRightY / 2, topLeftX, topLeftY);
             }
-        }else {
+        } else {
             ctx.lineTo(topLeftX, topLeftY);
             ctx.lineTo(bottomLeftX, bottomLeftY);
             ctx.lineTo(bottomRightX, bottomRightY);
         }
-        
+
 
         ctx.closePath();
         ctx.stroke();
-     //   ctx.fill();
+        if (!this.props.wireframe) ctx.fill();
     }
 
 
