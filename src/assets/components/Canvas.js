@@ -36,8 +36,6 @@ class Canvas extends React.PureComponent {
         )
     }
 
-
-
     draw(startX, startY, len, angle, branchWidth, ctx = this.ctx) {
         ctx.save();
         var bend = this.randValue(this.props.nextBendMin, this.props.nextBendMax);
@@ -132,12 +130,10 @@ class Canvas extends React.PureComponent {
         ctx.shadowBlur = 20;
         ctx.shadowColor = this.colTreeShadow;
 
-
         let topRightX = 0 + (nextWidth / 2);
         let topRightY = -len;
         let topLeftX = 0 - (nextWidth / 2);
         let topLeftY = -len;
-
 
         let bottomRightX = branchWidth / 2;
         let bottomRightY = 0;
@@ -166,19 +162,9 @@ class Canvas extends React.PureComponent {
             ctx.lineTo(bottomRightX, bottomRightY);
         }
 
-
         ctx.closePath();
         ctx.stroke();
         if (!this.props.wireframe) ctx.fill();
-    }
-
-
-    /**
-    * @param {number} num - min number
-    * @return {boolean} returns true one in 'num' times
-    */
-    booleanOneIn(num) {
-        return Math.floor(this.randValue(0, num)) === 0
     }
 
     /**
@@ -207,8 +193,6 @@ class Canvas extends React.PureComponent {
     getRandomBool() {
         return Math.random() <= 0.5;
     }
-
-
-
+    
 }
 export default Canvas

@@ -28,7 +28,7 @@ class AdvancedSlider extends React.PureComponent {
         return (
             <div className='sliderDiv'>
                 <label className='sliderlabel'>{this.props.label} <FontAwesomeIcon icon={faInfoCircle} /><span className="sliderText">{this.props.text}</span></label>
-                
+
                 <CompSlider
                     className='compslider'
                     domain={[this.props.minValue, this.props.maxValue]}
@@ -71,8 +71,6 @@ class AdvancedSlider extends React.PureComponent {
                         )}
                     </Tracks>
                 </CompSlider>
-
-
             </div>
         );
     }
@@ -86,8 +84,7 @@ function Handle({ handle: { id, value, percent }, getHandleProps, precision }) {
         <div
             style={{ left: `${percent}%` }}
             className='handle'
-            {...getHandleProps(id)}
-        >
+            {...getHandleProps(id)}>
             <div className='handle-label'>{value.toFixed(precision)}</div>
         </div>
     )
@@ -102,7 +99,7 @@ function Track({ source, target, getTrackProps }) {
                 left: `${source.percent}%`,
                 width: `${target.percent - source.percent}%`,
             }}
-            {...getTrackProps() }
+            {...getTrackProps()}
         />
     )
 }
