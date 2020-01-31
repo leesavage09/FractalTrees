@@ -95,7 +95,9 @@ h3 {
     font-family: 'Lobster', cursive;
 }
 
-
+.App-header {
+    overflow: hidden;
+}
 .controls {
     margin-left: 5vw;
     margin-right: 5vw;

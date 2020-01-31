@@ -2,8 +2,8 @@ import React from 'react';
 
 class Canvas extends React.PureComponent {
 
-    colTreeBark = "rgb(35,18,5)";
-    colTreeShadow = "rgba(35,18,5,0.75)";
+    colTreeBark = "rgb(55,38,25)";
+    colTreeShadow = "rgba(65,48,25,0.75)";
     colFruit = "rgb(224,93,0)";
     colFruitShadow = "rgba(0,0,0,0.75)";
 
@@ -59,26 +59,27 @@ class Canvas extends React.PureComponent {
         }
 
         var numBranch = 0;
-        if (this.booleanPercent(95)) {
+        if (this.booleanPercent(this.props.deathMax)) {
             numBranch = numBranch + 1;
              angle = this.randValue(this.props.nextAngleMin,this.props.nextAngleMax);
              var length = len * this.randValue(this.props.nextLengthMin, this.props.nextLengthMax);
             this.draw(0, 0, length, angle, nextWidth);
         }
-        var width = nextWidth * this.randValue(0.6, 0.9);
-        if (this.booleanPercent(60)) {
+        var width = nextWidth * this.randValue(this.props.nextWidthMin, this.props.nextWidthMax);
+        if (this.booleanPercent(this.props.deathSideMax)) {
             numBranch = numBranch + 1;
              angle = this.randValue(this.props.nextSideAngleMin, this.props.nextSideAngleMax);
              length = len * this.randValue(this.props.nextLengthMin, this.props.nextLengthMax);
             this.draw(0, 0, length, -angle, width);
         }
-        width = nextWidth * this.randValue(0.6, 0.9);
-        if (this.booleanPercent(60)) {
+        width = nextWidth * this.randValue(this.props.nextWidthMin, this.props.nextWidthMax);
+        if (this.booleanPercent(this.props.deathSideMax)) {
             numBranch = numBranch + 1;
              angle = this.randValue(this.props.nextSideAngleMin, this.props.nextSideAngleMax);
              length = len * this.randValue(this.props.nextLengthMin, this.props.nextLengthMax);
             this.draw(0, 0, length, angle, width);
         }
+
         if (numBranch !== 0) {
             this.drawSproutNode(0, 0, nextWidth);
         }
@@ -87,17 +88,17 @@ class Canvas extends React.PureComponent {
     }
 
     drawFruit(ctx = this.ctx) {
-        if (!this.booleanOneIn(5000)) return;
+        if (!this.booleanPercent(this.props.fruit)) return;
         ctx.beginPath();
         ctx.shadowColor = this.colFruitShadow;
         ctx.fillStyle = this.colFruit;
         ctx.arc(0, 2.5, 3, 0, 2 * Math.PI);
         ctx.stroke();
-        ctx.fill();
+   //     ctx.fill();
     }
 
     drawLeaf(ctx = this.ctx) {
-        if (!this.booleanOneIn(100)) return;
+        if (!this.booleanPercent(this.props.leaf)) return;
         ctx.beginPath();
         var r = Math.floor((Math.random() * 10) + 0);
         var g = Math.floor((Math.random() * 80) + 50);
@@ -107,13 +108,13 @@ class Canvas extends React.PureComponent {
         ctx.arc(-8, 0, 8, 0, 0.5 * Math.PI);
         ctx.closePath();
         ctx.stroke();
-        ctx.fill();
+       // ctx.fill();
 
         ctx.beginPath();
         ctx.arc(0, 8, 8, 1 * Math.PI, 1.5 * Math.PI);
         ctx.closePath();
         ctx.stroke();
-        ctx.fill();
+     //   ctx.fill();
     }
 
     drawSproutNode(x, y, width, ctx = this.ctx) {
@@ -121,7 +122,7 @@ class Canvas extends React.PureComponent {
         ctx.fillStyle = this.colTreeBark;
         ctx.arc(x, y, width / 2, 0, 2 * Math.PI);
         ctx.stroke();
-        ctx.fill();
+       // ctx.fill();
     }
 
     drawBranch(len, branchWidth, nextWidth, bend, ctx = this.ctx) {
@@ -147,21 +148,28 @@ class Canvas extends React.PureComponent {
 
         ctx.moveTo(topRightX, topRightY);
 
-        if (bendLeft) {
-            ctx.bezierCurveTo(topRightX, topRightY, (topRightX) + (topRightY / bend), topRightY / 2, bottomRightX, bottomRightY);
-        } else {
-            ctx.bezierCurveTo(topRightX, topRightY, (topRightX) + (-topRightY / bend), topRightY / 2, bottomRightX, bottomRightY);
+        if (bend !== 0) {
+            if (bendLeft) {
+                ctx.bezierCurveTo(topRightX, topRightY, (topRightX) + (topRightY / bend), topRightY / 2, bottomRightX, bottomRightY);
+            } else {
+                ctx.bezierCurveTo(topRightX, topRightY, (topRightX) + (-topRightY / bend), topRightY / 2, bottomRightX, bottomRightY);
+            }
+            ctx.lineTo(bottomLeftX, bottomLeftY);
+            if (bendLeft) {
+                ctx.bezierCurveTo(bottomLeftX, bottomLeftY, (topLeftX) + (topRightY / bend), topRightY / 2, topLeftX, topLeftY);
+            } else {
+                ctx.bezierCurveTo(bottomLeftX, bottomLeftY, (topLeftX) + (-topRightY / bend), topRightY / 2, topLeftX, topLeftY);
+            }
+        }else {
+            ctx.lineTo(topLeftX, topLeftY);
+            ctx.lineTo(bottomLeftX, bottomLeftY);
+            ctx.lineTo(bottomRightX, bottomRightY);
         }
-        ctx.lineTo(bottomLeftX, bottomLeftY);
-        if (bendLeft) {
-            ctx.bezierCurveTo(bottomLeftX, bottomLeftY, (topLeftX) + (topRightY / bend), topRightY / 2, topLeftX, topLeftY);
-        } else {
-            ctx.bezierCurveTo(bottomLeftX, bottomLeftY, (topLeftX) + (-topRightY / bend), topRightY / 2, topLeftX, topLeftY);
-        }
+        
 
         ctx.closePath();
         ctx.stroke();
-        ctx.fill();
+     //   ctx.fill();
     }
 
 
@@ -180,8 +188,8 @@ class Canvas extends React.PureComponent {
     booleanPercent(per) {
         per = per > 100 ? 100 : per;
         per = per > 0 ? per : 0;
-        let val = Math.floor(this.randValue(0, 101));
-        return val <= per
+        per = per / 100;
+        return Math.random() < per;
     }
 
     /**
