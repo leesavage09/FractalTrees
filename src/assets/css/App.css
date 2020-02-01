@@ -1,5 +1,6 @@
 body {
     margin: 0;
+    font-family: 'Lobster', cursive;
 }
 
 .treeCanvas {
@@ -27,7 +28,6 @@ body {
 
 h1 {
     opacity: 0;
-    font-family: 'Lobster', cursive;
     font-size: 60px;
     left: 50vw;
     transform: translate(-50%);
@@ -36,7 +36,6 @@ h1 {
 
 h2 {
     opacity: 0;
-    font-family: 'Lobster', cursive;
     font-size: 25px;
     top:60vh;
     transform: translate(0%,-50%);
@@ -45,14 +44,13 @@ h2 {
 
 h3 {
     text-align: center;
-    font-family: 'Lobster', cursive;
     -webkit-box-shadow: 0px 0px 20px 20px  #fff;
     -moz-box-shadow: 0px 0px 20px 20px  #fff;
     box-shadow: 0px 0px 20px 20px  #fff;
     background-color: #fff;
 }
 
-.welcome-text {
+.fog {
     padding-top:450vh;
     margin-bottom: 30px;
     height:100vh;
@@ -77,11 +75,6 @@ h3 {
     padding: 10px;
     border-radius: 6px;
     font-size: 28px;
-    font-family: 'Lobster', cursive;
-}
-
-.welcome-text p {
-    padding: 10px;
 }
 
 .scroll{
@@ -94,7 +87,6 @@ h3 {
     padding: 10px;
     border-radius: 6px;
     font-size: 28px;
-    font-family: 'Lobster', cursive;
 }
 
 .App-header {
@@ -106,6 +98,19 @@ h3 {
     margin-right: 5vw;
 }
 
+.text-block {
+    position: fixed;
+    width:90vw;
+    top:25vh;
+    transform: translate(0,-50%);
+    padding-left: 5vw;
+    padding-right: 5vw;
+}
+
 .spacer{
     padding-bottom: 75vh;
+}
+
+.text {
+    text-align: center; 
 }

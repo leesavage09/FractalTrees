@@ -174,10 +174,34 @@ class App extends React.Component {
     stopAtPos = (window.innerHeight * 3.0);
     this.animateH1H2motion(this.createScrollKeyframe(startAtPos, stopAtPos));
 
+    startAtPos = window.innerHeight * 3.0;
+    stopAtPos = window.innerHeight * 4.5;
+    this.animateFadeInP1(this.createScrollKeyframe(startAtPos, stopAtPos));
 
     startAtPos = window.innerHeight * 4.5;
     stopAtPos = window.innerHeight * 6.0;
-    this.animateFadeInOutC1(this.createScrollKeyframe(startAtPos, stopAtPos));
+    this.animateFadeOutP1(this.createScrollKeyframe(startAtPos, stopAtPos));
+
+    startAtPos = window.innerHeight * 6.0;
+    stopAtPos = window.innerHeight * 7.5;
+    this.animateFadeInP2(this.createScrollKeyframe(startAtPos, stopAtPos));
+
+    startAtPos = window.innerHeight * 7.5;
+    stopAtPos = window.innerHeight * 9.0;
+    this.animateFadeOutP2(this.createScrollKeyframe(startAtPos, stopAtPos));
+
+    startAtPos = window.innerHeight * 9.0;
+    stopAtPos = window.innerHeight * 10.5;
+    this.animateFadeInP3(this.createScrollKeyframe(startAtPos, stopAtPos));
+
+    startAtPos = window.innerHeight * 10.5;
+    stopAtPos = window.innerHeight * 12.0;
+    this.animateFadeOutP3(this.createScrollKeyframe(startAtPos, stopAtPos));
+
+
+    // startAtPos = window.innerHeight * 6.0;
+    // stopAtPos = window.innerHeight * 7.5;
+    // this.animateFadeInOutC1(this.createScrollKeyframe(startAtPos, stopAtPos));
 
   }
 
@@ -230,14 +254,63 @@ class App extends React.Component {
       this.setState({ h2Fade: 0 });
     }
   }
-  animateFadeInOutC1(keyframe) {
+  animateFadeInP1(keyframe) {
     if (keyframe !== 1 && keyframe !== 0) {
-      this.setState({ c1Fade: this.easeInCubic(this.mapRange(keyframe, 0, 0.5, 0.0, 1.5)), c1Scale: this.easeInCubic(this.mapRange(keyframe, 0, 0.6, 0.85, 1.0)) });
+      this.setState({ p1Fade: this.easeInCubic(keyframe), p1Top: ((1-keyframe)*10)+25+ 'vh'  });
     }
-    else if (keyframe === 0 && this.state.c1Fade !== 0) {
-      this.setState({ c1Fade: 0 });
+    else if (keyframe === 0 && this.state.p1Fade !== 0) {
+      this.setState({ p1Fade: 0 });
     }
   }
+  animateFadeOutP1(keyframe) {
+    if (keyframe !== 1 && keyframe !== 0) {
+      this.setState({ p1Fade: this.easeInCubic(1-keyframe), p1Top: ((-keyframe)*10)+25+ 'vh'  });
+    }
+    else if (keyframe === 1 && this.state.p1Fade !== 0) {
+      this.setState({ p1Fade: 0 });
+    }
+  }
+  animateFadeInP2(keyframe) {
+    if (keyframe !== 1 && keyframe !== 0) {
+      this.setState({ p2Fade: this.easeInCubic(keyframe), p2Top: ((1-keyframe)*10)+25+ 'vh'  });
+    }
+    else if (keyframe === 0 && this.state.p2Fade !== 0) {
+      this.setState({ p2Fade: 0 });
+    }
+  }
+  animateFadeOutP2(keyframe) {
+    if (keyframe !== 1 && keyframe !== 0) {
+      this.setState({ p2Fade: this.easeInCubic(1-keyframe), p2Top: ((-keyframe)*10)+25+ 'vh'  });
+    }
+    else if (keyframe === 1 && this.state.p1Fade !== 0) {
+      this.setState({ p2Fade: 0 });
+    }
+  }
+  animateFadeInP3(keyframe) {
+    if (keyframe !== 1 && keyframe !== 0) {
+      this.setState({ p3Fade: this.easeInCubic(keyframe), p3Top: ((1-keyframe)*10)+25+ 'vh'  });
+    }
+    else if (keyframe === 0 && this.state.p2Fade !== 0) {
+      this.setState({ p3Fade: 0 });
+    }
+  }
+  animateFadeOutP3(keyframe) {
+    if (keyframe !== 1 && keyframe !== 0) {
+      this.setState({ p3Fade: this.easeInCubic(1-keyframe), p3Top: ((-keyframe)*10)+25+ 'vh'  });
+    }
+    else if (keyframe === 1 && this.state.p1Fade !== 0) {
+      this.setState({ p3Fade: 0 });
+    }
+  }
+
+  // animateFadeInOutC1(keyframe) {
+  //   if (keyframe !== 1 && keyframe !== 0) {
+  //     this.setState({ c1Fade: this.easeInCubic(this.mapRange(keyframe, 0, 0.5, 0.0, 1.5)), c1Scale: this.easeInCubic(this.mapRange(keyframe, 0, 0.6, 0.85, 1.0)) });
+  //   }
+  //   else if (keyframe === 0 && this.state.c1Fade !== 0) {
+  //     this.setState({ c1Fade: 0 });
+  //   }
+  // }
 
   /**
    * Helper function maps a number that is in one range to another
@@ -265,10 +338,22 @@ class App extends React.Component {
       opacity: this.state.h2Fade,
       left: this.state.h2Left,
     };
-    const aniC1 = {
-      opacity: this.state.c1Fade,
-      transform: 'scale(' + this.state.c1Scale + ')',
+    const aniP1 = {
+      opacity: this.state.p1Fade,
+      top: this.state.p1Top,
     };
+    const aniP2 = {
+      opacity: this.state.p2Fade,
+      top: this.state.p2Top,
+    };
+    const aniP3 = {
+      opacity: this.state.p3Fade,
+      top: this.state.p3Top,
+    };
+    // const aniC1 = {
+    //   opacity: this.state.c1Fade,
+    //   transform: 'scale(' + this.state.c1Scale + ')',
+    // };
     return (
       <div className="App">
         <header className="App-header">
@@ -279,9 +364,18 @@ class App extends React.Component {
 
           <h1 style={aniH1}>Fractal Trees</h1>
           <h2 style={aniH2}>By Lee Savage</h2>
-          <div ref={(el) => this.yourElement = el} className='welcome-text' />
 
-          <div style={aniC1} className='controls'>
+          <div style={aniP1} className='text-block'>
+            <h3>What is a fractal tree</h3>
+            <p className='text'>A fractal tree is a procedurally generated image of a tree. The rules of the tree you see below are simple.<br />
+              1. Starting at the bottom of the screen draw a virtual line of length N<br />
+              2. At the end of the line draw 2 new lines at 45' with a length 0.5*N<br />
+              3. Repeat step 2 until the length is not worth drawing</p>
+          </div>
+
+          <div ref={(el) => this.yourElement = el} className='fog' />
+
+          <div style={aniP2} className='text-block'>
             <h3>The building block is the first rectangle it has a length and width</h3>
             <AdvancedSlider
               label="Length"
@@ -304,7 +398,13 @@ class App extends React.Component {
               valueChanged={this.initWidthChanged} />
           </div>
 
+          <div style={aniP3} className='text-block'>
+            <h3>But it doesn't look very much like a real tree</h3>
+            <p className='text'>I have always been fascinated by the idea that the universe is built on simple laws. The language of the universe appears to be mathematics. So how can we make the trees more natural. One key aspect is of this is a little randomness, some of the controls have 2 values. The algorithm will choose a random value in the range you select.</p>
+          </div>
 
+
+{/* 
 
           <div className='spacer'></div>
           <div className='controls'>
@@ -463,7 +563,7 @@ class App extends React.Component {
 
           <div className='goodbye-text'>
             <p className='thanks'>Thanks for playing</p>
-          </div>
+          </div> */}
 
           <Canvas className='treeCanvas'
             initLength={this.state.initLength}
