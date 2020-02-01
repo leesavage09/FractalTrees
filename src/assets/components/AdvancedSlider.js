@@ -6,6 +6,12 @@ import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
 class AdvancedSlider extends React.PureComponent {
 
+    static defaultProps = {
+        step: 1,
+        precision: 0,
+        numberHandles: 1,
+    }
+
     constructor(props) {
         super(props);
         this.handleChange = this.handleChange.bind(this);

@@ -4,6 +4,8 @@ import AdvancedSlider from './assets/components/AdvancedSlider';
 import Canvas from './assets/components/Canvas.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import Animate from './assets/helperClass/Animate';
+import DefaultTrees from './assets/helperClass/DefaultTrees';
 
 class App extends React.Component {
 
@@ -34,94 +36,14 @@ class App extends React.Component {
   /**
    * Some default trees
    */
-  christmasTree = () => this.setState({
-    initLength: 250, initWidth: 50,
-    nextLengthMin: 0.5, nextLengthMax: 0.5,
-    nextWidthMin: 0.5, nextWidthMax: 0.5,
-    nextBendMin: 0, nextBendMax: 0,
-    nextAngleMin: 0, nextAngleMax: 0,
-    nextSideAngleMin: 128, nextSideAngleMax: 128,
-    deathMin: 100, deathMax: 100,
-    deathSideMin: 100, deathSideMax: 100,
-    fruit: 20, leaf: 100,
-  });
-  niceTree = () => this.setState({
-    initLength: 91, initWidth: 22,
-    nextLengthMin: 0.6, nextLengthMax: 0.85,
-    nextWidthMin: 0.56, nextWidthMax: 0.8,
-    nextBendMin: 5, nextBendMax: 8,
-    nextAngleMin: -20, nextAngleMax: 20,
-    nextSideAngleMin: 20, nextSideAngleMax: 40,
-    deathMin: 95, deathMax: 95,
-    deathSideMin: 60, deathSideMax: 60,
-    fruit: 0, leaf: 0,
-  });
-  basicTree = () => this.setState({
-    initLength: 200, initWidth: 15,
-    nextLengthMin: 0.6, nextLengthMax: 0.6,
-    nextWidthMin: 0.8, nextWidthMax: 0.8,
-    nextBendMin: 0, nextBendMax: 0,
-    nextAngleMin: 0, nextAngleMax: 0,
-    nextSideAngleMin: 45, nextSideAngleMax: 45,
-    deathMin: 0, deathMax: 0,
-    deathSideMin: 100, deathSideMax: 100,
-    fruit: 0, leaf: 0,
-  });
-  squareTree = () => this.setState({
-    initLength: 250, initWidth: 36,
-    nextLengthMin: 0.7, nextLengthMax: 0.7,
-    nextWidthMin: 0.8, nextWidthMax: 0.8,
-    nextBendMin: 0, nextBendMax: 0,
-    nextAngleMin: 0, nextAngleMax: 0,
-    nextSideAngleMin: 90, nextSideAngleMax: 90,
-    deathMin: 0, deathMax: 0,
-    deathSideMin: 100, deathSideMax: 100,
-    fruit: 0, leaf: 0,
-  });
-  crazyTree = () => this.setState({
-    initLength: 200, initWidth: 15,
-    nextLengthMin: 0.6, nextLengthMax: 0.6,
-    nextWidthMin: 0.8, nextWidthMax: 0.8,
-    nextBendMin: 0.1, nextBendMax: 1,
-    nextAngleMin: 0, nextAngleMax: 0,
-    nextSideAngleMin: 45, nextSideAngleMax: 45,
-    deathMin: 0, deathMax: 0,
-    deathSideMin: 100, deathSideMax: 100,
-    fruit: 0, leaf: 0,
-  });
-  ballTree = () => this.setState({
-    initLength: 200, initWidth: 100,
-    nextLengthMin: 0.6, nextLengthMax: 0.6,
-    nextWidthMin: 0.8, nextWidthMax: 0.8,
-    nextBendMin: 0.1, nextBendMax: 0.1,
-    nextAngleMin: 0, nextAngleMax: 0,
-    nextSideAngleMin: 45, nextSideAngleMax: 45,
-    deathMin: 0, deathMax: 0,
-    deathSideMin: 100, deathSideMax: 100,
-    fruit: 0, leaf: 0,
-  });
-  oakTree = () => this.setState({
-    initLength: 127, initWidth: 71,
-    nextLengthMin: 0.6, nextLengthMax: 0.8,
-    nextWidthMin: 0.6, nextWidthMax: 0.75,
-    nextBendMin: 11, nextBendMax: 15,
-    nextAngleMin: -20, nextAngleMax: 20,
-    nextSideAngleMin: 27, nextSideAngleMax: 35,
-    deathMin: 85, deathMax: 95,
-    deathSideMin: 69, deathSideMax: 79,
-    fruit: 0, leaf: 8.4,
-  });
-  shrubTree = () => this.setState({
-    initLength: 120, initWidth: 33,
-    nextLengthMin: 0.6, nextLengthMax: 0.85,
-    nextWidthMin: 0.28, nextWidthMax: 0.67,
-    nextBendMin: 6, nextBendMax: 7,
-    nextAngleMin: -7, nextAngleMax: 7,
-    nextSideAngleMin: 8, nextSideAngleMax: 18,
-    deathMin: 95, deathMax: 95,
-    deathSideMin: 60, deathSideMax: 60,
-    fruit: 4, leaf: 0,
-  });
+  christmasTree = () => this.setState(DefaultTrees.christmasTree);
+  niceTree = () => this.setState(DefaultTrees.niceTree);
+  basicTree = () => this.setState(DefaultTrees.basicTree);
+  squareTree = () => this.setState(DefaultTrees.squareTree);
+  crazyTree = () => this.setState(DefaultTrees.crazyTree);
+  ballTree = () => this.setState(DefaultTrees.ballTree);
+  oakTree = () => this.setState(DefaultTrees.oakTree);
+  shrubTree = () => this.setState(DefaultTrees.shrubTree);
 
   /**
    * Handel state updates
@@ -153,181 +75,27 @@ class App extends React.Component {
   animateUI(e) {
     console.log(window.innerHeight, window.scrollY, window.innerHeight * 4.7);
 
-    let startAtPos = window.innerHeight * 0.0;
-    let stopAtPos = window.innerHeight * 1.0;
-    this.animateFadeInH1(this.createScrollKeyframe(startAtPos, stopAtPos));
+    let vh = window.innerHeight;
+    let fIn = Animate.animateFadeIn;
+    let fOut = Animate.animateFadeOut;
+    let keyFrame = Animate.createScrollKeyframe;
+    let motion = Animate.animateMotion;
 
-    startAtPos = window.innerHeight * 2.0;
-    stopAtPos = (window.innerHeight * 3.0);
-    this.animateFadeOutH1(this.createScrollKeyframe(startAtPos, stopAtPos));
+    fIn(keyFrame(vh * 0, vh * 1), 'h1Fade', this);
+    fIn(keyFrame(vh * 0.75, vh * 1.25), 'h2Fade', this);
+    fOut(keyFrame(vh * 1.5, vh * 2.5), 'h2Fade', this);
+    fOut(keyFrame(vh * 2, vh * 3), 'h1Fade', this);
+    motion(keyFrame(vh * 0, vh * 3), 15, 5, 35, 55, 'h1Top', 'h2Left', this);
 
-    startAtPos = window.innerHeight * 0.75;
-    stopAtPos = window.innerHeight * 1.25;
-    let tempkeyframe = this.createScrollKeyframe(startAtPos, stopAtPos);
-    this.animateFadeInH2(tempkeyframe);
+    fIn(keyFrame(vh * 3, vh * 4.5), 'p1Fade', this);
+    fOut(keyFrame(vh * 4.5, vh * 6), 'p1Fade', this);
 
-    startAtPos = window.innerHeight * 1.5;
-    stopAtPos = (window.innerHeight * 2.5);
-    this.animateFadeOutH2(this.createScrollKeyframe(startAtPos, stopAtPos));
+    fIn(keyFrame(vh * 6, vh * 7.5), 'p2Fade', this);
+    fOut(keyFrame(vh * 7.5, vh * 9), 'p2Fade', this);
 
-    startAtPos = window.innerHeight * 0.0;
-    stopAtPos = (window.innerHeight * 3.0);
-    this.animateH1H2motion(this.createScrollKeyframe(startAtPos, stopAtPos));
-
-    startAtPos = window.innerHeight * 3.0;
-    stopAtPos = window.innerHeight * 4.5;
-    this.animateFadeInP1(this.createScrollKeyframe(startAtPos, stopAtPos));
-
-    startAtPos = window.innerHeight * 4.5;
-    stopAtPos = window.innerHeight * 6.0;
-    this.animateFadeOutP1(this.createScrollKeyframe(startAtPos, stopAtPos));
-
-    startAtPos = window.innerHeight * 6.0;
-    stopAtPos = window.innerHeight * 7.5;
-    this.animateFadeInP2(this.createScrollKeyframe(startAtPos, stopAtPos));
-
-    startAtPos = window.innerHeight * 7.5;
-    stopAtPos = window.innerHeight * 9.0;
-    this.animateFadeOutP2(this.createScrollKeyframe(startAtPos, stopAtPos));
-
-    startAtPos = window.innerHeight * 9.0;
-    stopAtPos = window.innerHeight * 10.5;
-    this.animateFadeInP3(this.createScrollKeyframe(startAtPos, stopAtPos));
-
-    startAtPos = window.innerHeight * 10.5;
-    stopAtPos = window.innerHeight * 12.0;
-    this.animateFadeOutP3(this.createScrollKeyframe(startAtPos, stopAtPos));
-
-
-    // startAtPos = window.innerHeight * 6.0;
-    // stopAtPos = window.innerHeight * 7.5;
-    // this.animateFadeInOutC1(this.createScrollKeyframe(startAtPos, stopAtPos));
-
+    fIn(keyFrame(vh * 9, vh * 10.5), 'p3Fade', this);
+    fOut(keyFrame(vh * 10.5, vh * 12), 'p3Fade', this);
   }
-
-  /**
-   * Returns a keyframe int between 0 and 1 according to the postion between the two points on the screen
-   * @param {pixels from top of screen to START animation} startAtPos 
-   * @param {pixels from top of screen to STOP animation} stopAtPos 
-   */
-  createScrollKeyframe(startAtPos, stopAtPos) {
-    let pos = window.scrollY;
-    let keyframe = ((pos - startAtPos) / (stopAtPos - startAtPos));
-    return keyframe <= 0 ? 0 : (keyframe >= 1 ? 1 : keyframe);
-  }
-
-  //Animation Functions
-  animateH1H2motion(keyframe) {
-    if (keyframe !== 1 && keyframe !== 0) {
-      this.setState({ h1Top: ((1 - keyframe) * 15) + 35 + 'vh', h2Left: ((keyframe) * 5) + 55 + 'vw' });
-    }
-  }
-  animateFadeInH1(keyframe) {
-    if (keyframe !== 1 && keyframe !== 0) {
-      this.setState({ h1Fade: this.easeInCubic(keyframe) });
-    }
-    else if (keyframe === 0 && this.state.h1Fade !== 0) {
-      this.setState({ h1Fade: 0 });
-    }
-  }
-  animateFadeOutH1(keyframe) {
-    if (keyframe !== 1 && keyframe !== 0) {
-      this.setState({ h1Fade: this.easeOutCubic(1 - keyframe) });
-    }
-    if (keyframe === 1 && this.state.h1Fade !== 0) {
-      this.setState({ h1Fade: 0 });
-    }
-  }
-  animateFadeInH2(keyframe) {
-    if (keyframe !== 1 && keyframe !== 0) {
-      this.setState({ h2Fade: this.easeInCubic(keyframe) });
-    }
-    else if (keyframe === 0 && this.state.h2Fade !== 0) {
-      this.setState({ h2Fade: 0 });
-    }
-  }
-  animateFadeOutH2(keyframe) {
-    if (keyframe !== 1 && keyframe !== 0) {
-      this.setState({ h2Fade: this.easeOutCubic(1 - keyframe) });
-    }
-    if (keyframe === 1 && this.state.h2Fade !== 0) {
-      this.setState({ h2Fade: 0 });
-    }
-  }
-  animateFadeInP1(keyframe) {
-    if (keyframe !== 1 && keyframe !== 0) {
-      this.setState({ p1Fade: this.easeInCubic(keyframe), p1Top: ((1-keyframe)*10)+25+ 'vh'  });
-    }
-    else if (keyframe === 0 && this.state.p1Fade !== 0) {
-      this.setState({ p1Fade: 0 });
-    }
-  }
-  animateFadeOutP1(keyframe) {
-    if (keyframe !== 1 && keyframe !== 0) {
-      this.setState({ p1Fade: this.easeInCubic(1-keyframe), p1Top: ((-keyframe)*10)+25+ 'vh'  });
-    }
-    else if (keyframe === 1 && this.state.p1Fade !== 0) {
-      this.setState({ p1Fade: 0 });
-    }
-  }
-  animateFadeInP2(keyframe) {
-    if (keyframe !== 1 && keyframe !== 0) {
-      this.setState({ p2Fade: this.easeInCubic(keyframe), p2Top: ((1-keyframe)*10)+25+ 'vh'  });
-    }
-    else if (keyframe === 0 && this.state.p2Fade !== 0) {
-      this.setState({ p2Fade: 0 });
-    }
-  }
-  animateFadeOutP2(keyframe) {
-    if (keyframe !== 1 && keyframe !== 0) {
-      this.setState({ p2Fade: this.easeInCubic(1-keyframe), p2Top: ((-keyframe)*10)+25+ 'vh'  });
-    }
-    else if (keyframe === 1 && this.state.p1Fade !== 0) {
-      this.setState({ p2Fade: 0 });
-    }
-  }
-  animateFadeInP3(keyframe) {
-    if (keyframe !== 1 && keyframe !== 0) {
-      this.setState({ p3Fade: this.easeInCubic(keyframe), p3Top: ((1-keyframe)*10)+25+ 'vh'  });
-    }
-    else if (keyframe === 0 && this.state.p2Fade !== 0) {
-      this.setState({ p3Fade: 0 });
-    }
-  }
-  animateFadeOutP3(keyframe) {
-    if (keyframe !== 1 && keyframe !== 0) {
-      this.setState({ p3Fade: this.easeInCubic(1-keyframe), p3Top: ((-keyframe)*10)+25+ 'vh'  });
-    }
-    else if (keyframe === 1 && this.state.p1Fade !== 0) {
-      this.setState({ p3Fade: 0 });
-    }
-  }
-
-  // animateFadeInOutC1(keyframe) {
-  //   if (keyframe !== 1 && keyframe !== 0) {
-  //     this.setState({ c1Fade: this.easeInCubic(this.mapRange(keyframe, 0, 0.5, 0.0, 1.5)), c1Scale: this.easeInCubic(this.mapRange(keyframe, 0, 0.6, 0.85, 1.0)) });
-  //   }
-  //   else if (keyframe === 0 && this.state.c1Fade !== 0) {
-  //     this.setState({ c1Fade: 0 });
-  //   }
-  // }
-
-  /**
-   * Helper function maps a number that is in one range to another
-   */
-  mapRange = function (num, in_min, in_max, out_min, out_max) {
-    return (num - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
-  }
-
-  /**
-   * Easeing funtions
-   */
-  // accelerating from zero velocity 
-  easeInCubic = t => t * t * t;
-  // decelerating to zero velocity 
-  easeOutCubic = t => (--t) * t * t + 1;
-  // acceleration until halfway, then deceleration 
-  easeInOutCubic = t => t < .5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
 
   render() {
     const aniH1 = {
@@ -350,10 +118,7 @@ class App extends React.Component {
       opacity: this.state.p3Fade,
       top: this.state.p3Top,
     };
-    // const aniC1 = {
-    //   opacity: this.state.c1Fade,
-    //   transform: 'scale(' + this.state.c1Scale + ')',
-    // };
+
     return (
       <div className="App">
         <header className="App-header">
@@ -380,8 +145,6 @@ class App extends React.Component {
             <AdvancedSlider
               label="Length"
               text='The length of the first branch or trunk'
-              step={1}
-              precision={0}
               minValue={1}
               maxValue={250}
               value={this.state.initLength}
@@ -390,8 +153,6 @@ class App extends React.Component {
             <AdvancedSlider
               label="Width"
               text='The width of the first branch or trunk'
-              step={1}
-              precision={0}
               minValue={1}
               maxValue={100}
               value={this.state.initWidth}
@@ -402,9 +163,6 @@ class App extends React.Component {
             <h3>But it doesn't look very much like a real tree</h3>
             <p className='text'>I have always been fascinated by the idea that the universe is built on simple laws. The language of the universe appears to be mathematics. So how can we make the trees more natural. One key aspect is of this is a little randomness, some of the controls have 2 values. The algorithm will choose a random value in the range you select.</p>
           </div>
-
-
-{/* 
 
           <div className='spacer'></div>
           <div className='controls'>
@@ -462,8 +220,6 @@ class App extends React.Component {
               label="Main Death Rate"
               text='The probability the main trunk will survive'
               numberHandles={2}
-              step={1}
-              precision={0}
               minValue={0}
               maxValue={100}
               value={this.state.deathMin}
@@ -474,8 +230,6 @@ class App extends React.Component {
               label="Side Death Rate"
               text='The probability the side branches will survive'
               numberHandles={2}
-              step={1}
-              precision={0}
               minValue={0}
               maxValue={100}
               value={this.state.deathSideMin}
@@ -493,8 +247,6 @@ class App extends React.Component {
               label="Next angle "
               text='The next angle of the main trunk'
               numberHandles={2}
-              step={1}
-              precision={0}
               minValue={-150}
               maxValue={150}
               value={this.state.nextAngleMin}
@@ -505,8 +257,6 @@ class App extends React.Component {
               label="Next sidebanch angle"
               text='Brances to the left and right of the main trunk will have this angle'
               numberHandles={2}
-              step={1}
-              precision={0}
               minValue={0}
               maxValue={150}
               value={this.state.nextSideAngleMin}
@@ -525,7 +275,6 @@ class App extends React.Component {
             <AdvancedSlider
               label="Fruit Chance"
               text='The probability of fruit'
-              numberHandles={1}
               step={0.2}
               precision={0}
               minValue={0}
@@ -535,7 +284,6 @@ class App extends React.Component {
             <AdvancedSlider
               label="Leaf Chance"
               text='The probability of a leaf'
-              numberHandles={1}
               step={0.2}
               precision={0}
               minValue={0}
@@ -544,6 +292,12 @@ class App extends React.Component {
               valueChanged={this.leafChanged} />
             <input type="button" value='Wireframe Mode' onClick={this.wireframeToggle} />
           </div>
+
+
+
+          <div className='goodbye-text'>
+            <p className='thanks'>Thanks for playing</p>
+          </div> 
 
 
           <div className='spacer'></div>
@@ -560,10 +314,6 @@ class App extends React.Component {
           </div>
 
 
-
-          <div className='goodbye-text'>
-            <p className='thanks'>Thanks for playing</p>
-          </div> */}
 
           <Canvas className='treeCanvas'
             initLength={this.state.initLength}
