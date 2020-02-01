@@ -87,16 +87,16 @@ class App extends React.Component {
     fOut(keyFrame(vh * 2, vh * 3), 'h1Fade', this);
     motion(keyFrame(vh * 0, vh * 3), 15, 5, 35, 55, 'h1Top', 'h2Left', this);
 
-    fIn(keyFrame(vh * 3, vh * 4.5), 'p1Fade', this);
-    fOut(keyFrame(vh * 4.5, vh * 6), 'p1Fade', this);
-
-    fIn(keyFrame(vh * 6, vh * 7.5), 'p2Fade', this);
-    fOut(keyFrame(vh * 7.5, vh * 9), 'p2Fade', this);
-
-    fIn(keyFrame(vh * 9, vh * 10.5), 'p3Fade', this);
-    fOut(keyFrame(vh * 10.5, vh * 12), 'p3Fade', this);
+    let pStart = 2.5;
+    for (let i = 1; i <= 8; i++) {
+      fIn(keyFrame(vh * pStart, vh * (pStart + 1)), `p${i}Fade`, this);
+      fOut(keyFrame(vh * (pStart + 1), vh * (pStart + 2)), `p${i}Fade`, this);
+      pStart = pStart + 2;
+    }
   }
 
+
+  
   render() {
     const aniH1 = {
       opacity: this.state.h1Fade,
@@ -117,6 +117,26 @@ class App extends React.Component {
     const aniP3 = {
       opacity: this.state.p3Fade,
       top: this.state.p3Top,
+    };
+    const aniP4 = {
+      opacity: this.state.p4Fade,
+      top: this.state.p4Top,
+    };
+    const aniP5 = {
+      opacity: this.state.p5Fade,
+      top: this.state.p5Top,
+    };
+    const aniP6 = {
+      opacity: this.state.p6Fade,
+      top: this.state.p6Top,
+    };
+    const aniP7 = {
+      opacity: this.state.p7Fade,
+      top: this.state.p7Top,
+    };
+    const aniP8 = {
+      opacity: this.state.p8Fade,
+      top: this.state.p8Top,
     };
 
     return (
@@ -165,7 +185,7 @@ class App extends React.Component {
           </div>
 
           <div className='spacer'></div>
-          <div className='controls'>
+          <div style={aniP4} className='text-block'>
             <h3>The next is created from the last</h3>
             <AdvancedSlider
               label="Next Length"
@@ -195,7 +215,7 @@ class App extends React.Component {
 
 
           <div className='spacer'></div>
-          <div className='controls'>
+          <div style={aniP5} className='text-block'>
             <h3>If they were all rectangles it would be boaring</h3>
             <AdvancedSlider
               label="Bend"
@@ -214,7 +234,7 @@ class App extends React.Component {
 
 
           <div className='spacer'></div>
-          <div className='controls'>
+          <div style={aniP6} className='text-block'>
             <h3>Everything Dies</h3>
             <AdvancedSlider
               label="Main Death Rate"
@@ -241,7 +261,7 @@ class App extends React.Component {
 
 
           <div className='spacer'></div>
-          <div className='controls'>
+          <div style={aniP7} className='text-block'>
             <h3>The angles are all wrong</h3>
             <AdvancedSlider
               label="Next angle "
@@ -270,7 +290,7 @@ class App extends React.Component {
 
 
           <div className='spacer'></div>
-          <div className='controls'>
+          <div style={aniP8} className='text-block'>
             <h3>Decoration</h3>
             <AdvancedSlider
               label="Fruit Chance"
@@ -297,7 +317,7 @@ class App extends React.Component {
 
           <div className='goodbye-text'>
             <p className='thanks'>Thanks for playing</p>
-          </div> 
+          </div>
 
 
           <div className='spacer'></div>
