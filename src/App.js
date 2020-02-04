@@ -13,24 +13,12 @@ class App extends React.Component {
    * Get scroll events
    */
   componentDidMount() {
-    window.addEventListener('scroll', this.animateUI.bind(this));
+    window.addEventListener('scroll', this.animateUI.bind(this)); //TODO is this good in react?
   }
 
   constructor(props) {
     super(props);
-    this.state = {
-      initLength: 200, initWidth: 15,
-      nextLengthMin: 0.6, nextLengthMax: 0.6,
-      nextWidthMin: 0.8, nextWidthMax: 0.8,
-      nextBendMin: 0, nextBendMax: 0,
-      nextAngleMin: 0, nextAngleMax: 0,
-      nextSideAngleMin: 45, nextSideAngleMax: 45,
-      deathMin: 0, deathMax: 0,
-      deathSideMin: 100, deathSideMax: 100,
-      fruit: 0, leaf: 0,
-      wireframe: false,
-    };
-    this.handleScroll = this.animateUI.bind(this);
+    this.state = DefaultTrees.basicTree;
   }
 
   /**
@@ -66,77 +54,100 @@ class App extends React.Component {
   deathSideMaxChanged = (v) => this.setState({ deathSideMax: parseFloat(v) });
   fruitChanged = (v) => this.setState({ fruit: parseFloat(v) });
   leafChanged = (v) => this.setState({ leaf: parseFloat(v) });
-  wireframeToggle = (v) => this.setState({ wireframe: !this.state.wireframe });
+  wireframeToggle = (v) => this.setState({ wireframe: !this.state.wireframe });//TODO async issues?
 
   /**
    * Create animations based on scroll positions realtive to VH units
    * @param {a scroll event} e 
    */
-  animateUI(e) {
-    console.log(window.innerHeight, window.scrollY, window.innerHeight * 4.7);
-
+  animateUI() {
     let vh = window.innerHeight;
     let fIn = Animate.animateFadeIn;
     let fOut = Animate.animateFadeOut;
     let keyFrame = Animate.createScrollKeyframe;
     let motion = Animate.animateMotion;
 
-    fIn(keyFrame(vh * 0, vh * 1), 'h1Fade', this);
-    fIn(keyFrame(vh * 0.75, vh * 1.25), 'h2Fade', this);
-    fOut(keyFrame(vh * 1.5, vh * 2.5), 'h2Fade', this);
-    fOut(keyFrame(vh * 2, vh * 3), 'h1Fade', this);
-    motion(keyFrame(vh * 0, vh * 3), 15, 5, 35, 55, 'h1Top', 'h2Left', this);
+    fIn(keyFrame(vh * 0, vh * 1), 'h1', this);
+    fIn(keyFrame(vh * 0.75, vh * 1.25), 'h2', this);
+    fOut(keyFrame(vh * 1.5, vh * 2.5), 'h2', this);
+    fOut(keyFrame(vh * 2, vh * 3), 'h1', this);
+    motion(keyFrame(vh * 0, vh * 3), 15, 5, 35, 55, 'h1', this);
+    motion(keyFrame(vh * 0, vh * 3), 15, 5, 35, 55, 'h2', this);
 
     let pStart = 2.5;
-    for (let i = 1; i <= 8; i++) {
-      fIn(keyFrame(vh * pStart, vh * (pStart + 1)), `p${i}Fade`, this);
-      fOut(keyFrame(vh * (pStart + 1), vh * (pStart + 2)), `p${i}Fade`, this);
+    for (let i = 1; i <= 9; i++) {
+      fIn(keyFrame(vh * pStart, vh * (pStart + 1)), `p${i}`, this);
+      fOut(keyFrame(vh * (pStart + 1), vh * (pStart + 2)), `p${i}`, this);
+      motion(keyFrame(vh * pStart, vh * (pStart + 2)), 15, 0, 15, 0, `p${i}`, this);
       pStart = pStart + 2;
     }
+
+    fIn(keyFrame(vh * pStart, vh * (pStart + 3)), 'g1', this);
+    motion(keyFrame(vh * pStart, vh * (pStart + 3)), 25, 0, 15, 0, 'g2', this);
   }
 
-
-  
   render() {
     const aniH1 = {
       opacity: this.state.h1Fade,
       top: this.state.h1Top,
+      display: this.state.h1Display,
     };
     const aniH2 = {
       opacity: this.state.h2Fade,
       left: this.state.h2Left,
+      display: this.state.h2Display,
     };
     const aniP1 = {
       opacity: this.state.p1Fade,
       top: this.state.p1Top,
+      display: this.state.p1Display,
     };
     const aniP2 = {
       opacity: this.state.p2Fade,
       top: this.state.p2Top,
+      display: this.state.p2Display,
     };
     const aniP3 = {
       opacity: this.state.p3Fade,
       top: this.state.p3Top,
+      display: this.state.p3Display,
     };
     const aniP4 = {
       opacity: this.state.p4Fade,
       top: this.state.p4Top,
+      display: this.state.p4Display,
     };
     const aniP5 = {
       opacity: this.state.p5Fade,
       top: this.state.p5Top,
+      display: this.state.p5Display,
     };
     const aniP6 = {
       opacity: this.state.p6Fade,
       top: this.state.p6Top,
+      display: this.state.p6Display,
     };
     const aniP7 = {
       opacity: this.state.p7Fade,
       top: this.state.p7Top,
+      display: this.state.p7Display,
     };
     const aniP8 = {
       opacity: this.state.p8Fade,
       top: this.state.p8Top,
+      display: this.state.p8Display,
+    };
+    const aniP9 = {
+      opacity: this.state.p9Fade,
+      top: this.state.p9Top,
+      display: this.state.p9Display,
+    };
+    const aniG1 = {
+      opacity: this.state.g1Fade,
+      display: this.state.g1Display,
+    };
+    const aniG2 = {
+      top: this.state.g2Top,
     };
 
     return (
@@ -313,15 +324,8 @@ class App extends React.Component {
             <input type="button" value='Wireframe Mode' onClick={this.wireframeToggle} />
           </div>
 
-
-
-          <div className='goodbye-text'>
-            <p className='thanks'>Thanks for playing</p>
-          </div>
-
-
           <div className='spacer'></div>
-          <div className='controls'>
+          <div style={aniP9} className='text-block'>
             <h3>Decoration</h3>
             <input type="button" value='Basic Tree' onClick={this.basicTree} />
             <input type="button" value='Nice Tree' onClick={this.niceTree} />
@@ -356,6 +360,14 @@ class App extends React.Component {
             leaf={this.state.leaf}
             wireframe={this.state.wireframe}
           />
+
+          <div style={aniG1} className='goodbye-sky'>
+            <p style={aniG2} className='goodbye-text'>Thanks for playing</p>
+          </div>
+          <div style={aniG1} className='goodbye-ground' />
+
+
+
         </header>
       </div >
     );

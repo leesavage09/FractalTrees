@@ -12,42 +12,49 @@ class Animate {
   }
 
   static animateFadeIn(keyframe, stateProperty,app) {
+    let fade = `${stateProperty}Fade`;
+    let display = `${stateProperty}Display`;
     // inital state
-    if (keyframe === 0 && app.state[stateProperty] !== 0) {
-        app.setState({ [stateProperty]: 0 });
+    if (keyframe === 0 && app.state[fade] !== 0) {
+        app.setState({ [fade]: 0 });
+        app.setState({ [display]: 'none' });
     }
     // during key frame render
     if (keyframe !== 1 && keyframe !== 0) {
-        app.setState({ [stateProperty]: Animate.easeInCubic(keyframe) });
+        app.setState({ [fade]: Animate.easeInCubic(keyframe) });
+        app.setState({ [display]: 'inline' });
     }
   }
 
   static animateFadeOut(keyframe, stateProperty,app) {
+    let fade = `${stateProperty}Fade`;
+    let display = `${stateProperty}Display`;
     // during key frame render
     if (keyframe !== 1 && keyframe !== 0) {
-        app.setState({ [stateProperty]: Animate.easeOutCubic(1 - keyframe) });
+        app.setState({ [fade]: Animate.easeOutCubic(1 - keyframe) });
+        app.setState({ [display]: 'inline' });
     }
     //end state
-    if (keyframe === 1 && app.state[stateProperty] !== 0) {
-        app.setState({ [stateProperty]: 0 });
+    if (keyframe === 1 && app.state[fade] !== 0) {
+        app.setState({ [fade]: 0 });
+        app.setState({ [display]: 'none' });
     }
   }
 
-  static animateMotion(keyframe, up, right, top, left, statePropertyTop, statePropertyLeft,app) {
+  static animateMotion(keyframe, moveUp, moveRight, initTop, initLeft, stateProperty,app) {
+    let cssTop = `${stateProperty}Top`;
+    let cssLeft = `${stateProperty}Left`;
     if (keyframe !== 1 && keyframe !== 0) {
-      let obj = {};
-      if (statePropertyTop) {
-        obj[statePropertyTop] =  ((1 - keyframe) * up) + top + 'vh';
-      }
-      if (statePropertyLeft) {
-        obj[statePropertyLeft] = (keyframe * right) + left + 'vw';
-      }
+      let obj = {
+        [cssTop]:  ((1 - keyframe) * moveUp) + initTop + 'vh',
+        [cssLeft]: (keyframe * moveRight) + initLeft + 'vw'
+      };
       app.setState(obj);
     }
   }
 
   /**
-   * Helper function maps a number that is in one range to another
+   * Maps number that is in one range to another
    */
   static mapRange = function (num, in_min, in_max, out_min, out_max) {
     return (num - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
@@ -60,10 +67,6 @@ class Animate {
   static easeInCubic = t => t * t * t;
   // decelerating to zero velocity 
   static easeOutCubic = t => (--t) * t * t + 1;
-  // acceleration until halfway, then deceleration 
-  static easeInOutCubic = t => t < .5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
-
-
 
 }
 
