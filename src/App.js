@@ -63,6 +63,7 @@ class App extends React.Component {
   animateUI() {
     let vh = window.innerHeight;
     let fIn = Animate.animateFadeIn;
+    let fInHold = Animate.animateFadeInAndHold;
     let fOut = Animate.animateFadeOut;
     let keyFrame = Animate.createScrollKeyframe;
     let motion = Animate.animateMotion;
@@ -82,7 +83,7 @@ class App extends React.Component {
       pStart = pStart + 2;
     }
 
-    fIn(keyFrame(vh * pStart, vh * (pStart + 3)), 'g1', this);
+    fInHold(keyFrame(vh * pStart, vh * (pStart + 3)), 'g1', this);
     motion(keyFrame(vh * pStart, vh * (pStart + 3)), 25, 0, 15, 0, 'g2', this);
   }
 
@@ -362,7 +363,10 @@ class App extends React.Component {
           />
 
           <div style={aniG1} className='goodbye-sky'>
-            <p style={aniG2} className='goodbye-text'>Thanks for playing</p>
+            <p style={aniG2} className='goodbye-text'>
+              Thanks for playing<br></br>
+            <a href="https://github.com/leesavage09/FractalTrees">View Source on github</a>
+            </p>
           </div>
           <div style={aniG1} className='goodbye-ground' />
 

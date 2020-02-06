@@ -75,11 +75,16 @@ h3 {
 }
 .goodbye-text {
     position: fixed;
-    font-size: 60px;
+    font-size: 45px;
     top: 25vh;
     left: 50vw;
     transform: translate(-50%,-50%);
     color: white;
+    text-align: center;
+}
+.goodbye-text a {
+    font-size: 25px;
+    color: rgb(18, 88, 192);
 }
 
 

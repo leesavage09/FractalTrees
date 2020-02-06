@@ -20,8 +20,7 @@ class Canvas extends React.PureComponent {
         if (this.ctx === null) return;
         this.timeout && clearTimeout(this.timeout);
         this.timeout = setTimeout(() => {
-            this.ctx.fillStyle = "#fff";
-            this.ctx.fillRect(0, 0, 2000, 2000);
+            this.ctx.clearRect(0, 0, 2000, 2000);
             let angle = 0;
             let startX = 500;
             let startY = 1000;
