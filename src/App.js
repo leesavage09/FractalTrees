@@ -169,7 +169,7 @@ class App extends React.Component {
           <h2 style={aniH2}>By Lee Savage</h2>
 
           <div style={aniP1} className='text-block'>
-            <h3>What is a fractal tree</h3>
+            <h3>Fractal Trees</h3>
             <p className='text'>A fractal tree is a procedurally generated image of a tree. The rules of the tree you see below are simple.<br></br>
               1. Starting at the bottom of the screen draw an upward line of length N<br></br>
               2. At the end of the line draw 2 new lines at 45' with a length 0.5*N<br></br>
@@ -179,6 +179,19 @@ class App extends React.Component {
           <div ref={(el) => this.yourElement = el} className='fog' />
 
           <div style={aniP2} className='text-block'>
+            <h3>Making a better tree</h3>
+            <p className='text'>
+              I have always been fascinated by the idea that simple laws can create significant complexity. The language of the universe appears to be one of mathematics. So how can we make the trees more natural? One key aspect of this is a little randomness.
+            </p>
+            <p className='text'>
+              Using the following controls tweak values of the recursive tree function to create new structures. Some of the controls have 2 values. The algorithm chooses a random value in the range you select.
+            </p>
+            <p className='text'>
+              Warning! There is potentially no end to a recursive Fractal Tree. Some values could lead to a very large or infinite tree. Imagen if the branches got longer every iteration. The tree would grow forever. Should you accidentally create such a tree, I cannot be held responsible for the consequences! Please restart your browser tab if you experience extreme draw time.
+            </p>
+          </div>
+
+          <div style={aniP3} className='text-block'>
             <h3>The building block is the first rectangle it has a length and width</h3>
             <AdvancedSlider
               label="Length"
@@ -195,11 +208,6 @@ class App extends React.Component {
               maxValue={100}
               value={this.state.initWidth}
               valueChanged={this.initWidthChanged} />
-          </div>
-
-          <div style={aniP3} className='text-block'>
-            <h3>But it doesn't look very much like a real tree</h3>
-            <p className='text'>I have always been fascinated by the idea that the universe is built on simple laws. The language of the universe appears to be mathematics. So how can we make the trees more natural. One key aspect is of this is a little randomness, some of the controls have 2 values. The algorithm will choose a random value in the range you select.</p>
           </div>
 
           <div className='spacer'></div>
@@ -234,7 +242,7 @@ class App extends React.Component {
 
           <div className='spacer'></div>
           <div style={aniP5} className='text-block'>
-            <h3>If they were all rectangles it would be boaring</h3>
+            <h3>Some curves</h3>
             <AdvancedSlider
               label="Bend"
               text='bezier Curve, low numbers create more bend, 0 disables bend'
@@ -345,7 +353,7 @@ class App extends React.Component {
           </div>
 
 
-          
+
           <Canvas className='treeCanvas'
             version={this.state.version}
             initLength={this.state.initLength}
@@ -371,8 +379,8 @@ class App extends React.Component {
 
           <div style={aniG1} className='goodbye-sky'>
             <p style={aniG2} className='goodbye-text'>
-              Thanks for playing<br></br>
-              <a href="https://github.com/leesavage09/FractalTrees">View Source on github</a>
+              <p>Thanks for playing</p>
+              <a href="https://github.com/leesavage09/FractalTrees">Source On GitHub</a>
             </p>
           </div>
           <div style={aniG1} className='goodbye-ground' />

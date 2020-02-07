@@ -14,7 +14,7 @@ body {
 .sideBar1,.sideBar2{
     width:15px;
     position: absolute;
-    height:2600vh;
+    height:3000vh;
     background: repeating-linear-gradient(#ddd 0px, #fff 20px, #666 20px, #111 40px);
     z-index: 9;
 }
@@ -152,7 +152,7 @@ h3 {
     border-width: 2px;
     font-family: 'Lobster', cursive;
     color: rgb(18, 88, 192);
-    background-color: rgba(191, 203, 221,0.5);
+    background-color: white;
 }
 
 .render-tree-btn {
