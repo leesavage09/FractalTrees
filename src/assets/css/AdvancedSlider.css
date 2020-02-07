@@ -67,6 +67,7 @@
     background-color: #000;
     position: absolute;
     z-index: 9;
+    margin-right: 30px;
   }
 
   .sliderlabel {

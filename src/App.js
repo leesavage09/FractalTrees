@@ -18,7 +18,7 @@ class App extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = DefaultTrees.basicTree;
+    this.state = { ...DefaultTrees.basicTree, version: 1 };
   }
 
   /**
@@ -32,6 +32,7 @@ class App extends React.Component {
   ballTree = () => this.setState(DefaultTrees.ballTree);
   oakTree = () => this.setState(DefaultTrees.oakTree);
   shrubTree = () => this.setState(DefaultTrees.shrubTree);
+  renderTree = () => this.setState({ version: (this.state.version + 1) });
 
   /**
    * Handel state updates
@@ -83,6 +84,7 @@ class App extends React.Component {
       pStart = pStart + 2;
     }
 
+    fInHold(keyFrame(vh * 8.5, vh * 9.5), 'r1', this);
     fInHold(keyFrame(vh * pStart, vh * (pStart + 3)), 'g1', this);
     motion(keyFrame(vh * pStart, vh * (pStart + 3)), 25, 0, 15, 0, 'g2', this);
   }
@@ -150,6 +152,10 @@ class App extends React.Component {
     const aniG2 = {
       top: this.state.g2Top,
     };
+    const aniR1 = {
+      opacity: this.state.r1Fade,
+      display: this.state.r1Display,
+    }
 
     return (
       <div className="App">
@@ -164,10 +170,10 @@ class App extends React.Component {
 
           <div style={aniP1} className='text-block'>
             <h3>What is a fractal tree</h3>
-            <p className='text'>A fractal tree is a procedurally generated image of a tree. The rules of the tree you see below are simple.<br />
-              1. Starting at the bottom of the screen draw a virtual line of length N<br />
-              2. At the end of the line draw 2 new lines at 45' with a length 0.5*N<br />
-              3. Repeat step 2 until the length is not worth drawing</p>
+            <p className='text'>A fractal tree is a procedurally generated image of a tree. The rules of the tree you see below are simple.<br></br>
+              1. Starting at the bottom of the screen draw an upward line of length N<br></br>
+              2. At the end of the line draw 2 new lines at 45' with a length 0.5*N<br></br>
+              3. Repeat step 2 until the length is small</p>
           </div>
 
           <div ref={(el) => this.yourElement = el} className='fog' />
@@ -231,7 +237,7 @@ class App extends React.Component {
             <h3>If they were all rectangles it would be boaring</h3>
             <AdvancedSlider
               label="Bend"
-              text='bezier Curve, low numbers create more bend '
+              text='bezier Curve, low numbers create more bend, 0 disables bend'
               numberHandles={2}
               step={0.1}
               precision={1}
@@ -247,9 +253,9 @@ class App extends React.Component {
 
           <div className='spacer'></div>
           <div style={aniP6} className='text-block'>
-            <h3>Everything Dies</h3>
+            <h3>Survival Rates</h3>
             <AdvancedSlider
-              label="Main Death Rate"
+              label="Main Trunk"
               text='The probability the main trunk will survive'
               numberHandles={2}
               minValue={0}
@@ -259,7 +265,7 @@ class App extends React.Component {
               valueChanged={this.deathMinChanged}
               value2Changed={this.deathMaxChanged} />
             <AdvancedSlider
-              label="Side Death Rate"
+              label="Side Branches"
               text='The probability the side branches will survive'
               numberHandles={2}
               minValue={0}
@@ -274,7 +280,7 @@ class App extends React.Component {
 
           <div className='spacer'></div>
           <div style={aniP7} className='text-block'>
-            <h3>The angles are all wrong</h3>
+            <h3>The angles</h3>
             <AdvancedSlider
               label="Next angle "
               text='The next angle of the main trunk'
@@ -322,25 +328,26 @@ class App extends React.Component {
               maxValue={100}
               value={this.state.leaf}
               valueChanged={this.leafChanged} />
-            <input type="button" value='Wireframe Mode' onClick={this.wireframeToggle} />
+            <input class="tree-btn" type="button" value='Wireframe Mode' onClick={this.wireframeToggle} />
           </div>
 
           <div className='spacer'></div>
           <div style={aniP9} className='text-block'>
-            <h3>Decoration</h3>
-            <input type="button" value='Basic Tree' onClick={this.basicTree} />
-            <input type="button" value='Nice Tree' onClick={this.niceTree} />
-            <input type="button" value='Crazy Tree' onClick={this.crazyTree} />
-            <input type="button" value='Oak Tree' onClick={this.oakTree} />
-            <input type="button" value='Shrub Tree' onClick={this.shrubTree} />
-            <input type="button" value='Ball Tree' onClick={this.ballTree} />
-            <input type="button" value='Square Tree' onClick={this.squareTree} />
-            <input type="button" value='Christmas Tree' onClick={this.christmasTree} />
+            <h3>Example Trees</h3>
+            <input class="tree-btn" type="button" value='Basic Tree' onClick={this.basicTree} />
+            <input class="tree-btn" type="button" value='Nice Tree' onClick={this.niceTree} />
+            <input class="tree-btn" type="button" value='Crazy Tree' onClick={this.crazyTree} />
+            <input class="tree-btn" type="button" value='Oak Tree' onClick={this.oakTree} />
+            <input class="tree-btn" type="button" value='Shrub Tree' onClick={this.shrubTree} />
+            <input class="tree-btn" type="button" value='Ball Tree' onClick={this.ballTree} />
+            <input class="tree-btn" type="button" value='Square Tree' onClick={this.squareTree} />
+            <input class="tree-btn" type="button" value='Christmas Tree' onClick={this.christmasTree} />
           </div>
 
 
-
+          
           <Canvas className='treeCanvas'
+            version={this.state.version}
             initLength={this.state.initLength}
             initWidth={this.state.initWidth}
             nextWidthMin={this.state.nextWidthMin}
@@ -365,11 +372,12 @@ class App extends React.Component {
           <div style={aniG1} className='goodbye-sky'>
             <p style={aniG2} className='goodbye-text'>
               Thanks for playing<br></br>
-            <a href="https://github.com/leesavage09/FractalTrees">View Source on github</a>
+              <a href="https://github.com/leesavage09/FractalTrees">View Source on github</a>
             </p>
           </div>
           <div style={aniG1} className='goodbye-ground' />
 
+          <input style={aniR1} class="tree-btn render-tree-btn" type="button" value='Render Tree' onClick={this.renderTree} />
 
 
         </header>
